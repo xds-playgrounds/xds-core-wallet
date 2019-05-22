@@ -1,8 +1,8 @@
-[submodule "StratisBitcoinFullNode"]
-	path = StratisBitcoinFullNode
-	url = https://github.com/stratisproject/StratisBitcoinFullNode/
+[submodule "SolarisBitcoinFullNode"]
+	path = SolarisBitcoinFullNode
+	url = https://github.com/SolarisPlatform/SolarisBitcoinFullNode/
 
 [submodule "FederatedSidechains"]
 	path = FederatedSidechains
-	url = https://github.com/stratisproject/FederatedSidechains
+	url = https://github.com/SolarisPlatform/FederatedSidechains
 	
