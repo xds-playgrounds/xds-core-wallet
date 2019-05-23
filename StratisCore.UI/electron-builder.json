@@ -1,6 +1,6 @@
 {
   "appId": "com.stratisplatform.core",
-  "productName": "Stratis Core",
+  "productName": "Solaris Core",
   "publish": null,
   "directories": {
     "output": "app-builds"

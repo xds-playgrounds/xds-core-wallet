@@ -20,7 +20,7 @@ let apiPort;
 if (testnet && !sidechain) {
   apiPort = 38221;
 } else if (!testnet && !sidechain) {
-  apiPort = 37221;
+  apiPort = 62000;
 } else if (sidechain && testnet) {
   apiPort = 38225;
 } else if (sidechain && !testnet) {
@@ -55,7 +55,7 @@ function createWindow() {
     frame: true,
     minWidth: 1150,
     minHeight: 650,
-    title: "Stratis Core"
+    title: "Solaris Core"
   });
 
   if (serve) {
@@ -102,7 +102,7 @@ app.on('ready', () => {
     if (sidechain && !nodaemon) {
       startDaemon("Stratis.SidechainD");
     } else if (!nodaemon) {
-      startDaemon("Stratis.StratisD")
+      startDaemon("Stratis.SolarisD")
     }
   }
   createTray();
@@ -180,7 +180,7 @@ function startDaemon(daemonName) {
   });
 
   daemonProcess.stdout.on('data', (data) => {
-    writeLog(`Stratis: ${data}`);
+    writeLog(`Solaris: ${data}`);
   });
 }
 
@@ -208,7 +208,7 @@ function createTray() {
       }
     }
   ]);
-  systemTray.setToolTip('Stratis Core');
+  systemTray.setToolTip('Solaris Core');
   systemTray.setContextMenu(contextMenu);
   systemTray.on('click', function() {
     if (!mainWindow.isVisible()) {
