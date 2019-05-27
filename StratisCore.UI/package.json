@@ -56,7 +56,8 @@
   "dependencies": {
     "electron-context-menu": "0.11.0",
     "ngx-pagination": "3.2.1",
-    "ngx-qrcode2": "0.0.9"
+    "ngx-qrcode2": "0.0.9",
+    "npm": "^6.9.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",

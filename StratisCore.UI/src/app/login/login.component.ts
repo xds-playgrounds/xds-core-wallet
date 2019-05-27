@@ -24,10 +24,12 @@ export class LoginComponent implements OnInit {
   private openWalletForm: FormGroup;
   private wallets: [string];
 
+
   ngOnInit() {
     this.getWalletFiles();
     this.getCurrentNetwork();
   }
+
 
   private buildDecryptForm(): void {
     this.openWalletForm = this.fb.group({

@@ -1,7 +1,7 @@
-<div class="card p-4">
-  <div class="card-header">Generate Addresses</div>
+<div class="card">
   <div class="card-body" style="min-height:200px;">
     <div>
+      <h3 class="title-bottom-border text-uppercase">Generate Addresses</h3>
       <form class="form-group" [formGroup]="generateAddressesForm">
         <div class="form-group mt-3">
           <label for="generateAddresses">Amount of generated addresses:</label>
@@ -10,7 +10,7 @@
         </div>
       </form>
       <div>
-        <button type="submit" class="btn btn-primary btn-block" [disabled]="!generateAddressesForm.valid" (click)="onGenerateClicked()">Generate</button>
+        <button type="submit" class="btn btn-primary btn-block text-uppercase" [disabled]="!generateAddressesForm.valid" (click)="onGenerateClicked()">Generate</button>
       </div>
     </div>
     <div class="mt-4" *ngIf="addresses?.length > 0">

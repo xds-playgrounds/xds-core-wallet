@@ -35,7 +35,7 @@ export class FakeColdStakingService implements ColdStakingServiceBase {
     }
 
     GetAddress(walletName: string): Observable<string> {
-        return of('ScCHt2Mug856o1E6gck6VFriXYnRYBD8NE');
+        return of('XcCHt2Mug856o1E6gck6VFriXYnRYBD8NE');
     }
 
     CreateColdstaking(...params): Observable<boolean> {

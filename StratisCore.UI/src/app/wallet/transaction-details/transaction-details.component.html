@@ -3,7 +3,7 @@
   <h5 class="modal-title">Transaction details</h5>
   <!-- button close -->
   <button type="button" class="close closemodal ml-auto" (click)="activeModal.close('Close click')">
-    <i class="lnr lnr-cross-circle"></i>
+    <i class="lnr lnr-cross"></i>
   </button>
   <!-- /button close -->
 </div>
@@ -43,8 +43,8 @@
   </ul>
   <ul class="list-inline row">
     <li class="list-inline-item col-12 blockLabel my-3">Transaction ID</li>
-    <li class="list-inline-item col-10 blockID"><code>{{ transaction.transactionId }}</code></li>
-    <button type="button" class="btn btn-outline-secondary col-1 btn-sm" placement="top" ngbTooltip="Copy to clipboard" ngxClipboard [cbContent]="transaction.transactionId" (click)="onCopiedClick()">
+    <li class="list-inline-item col-10 blockID text-lightblue">{{ transaction.transactionId }}</li>
+    <button type="button" class="btn btn-primary col-1 btn-sm" placement="top" ngbTooltip="Copy to clipboard" ngxClipboard [cbContent]="transaction.transactionId" (click)="onCopiedClick()">
       <i class="lnr lnr-file-add"></i>
     </button>
   </ul>

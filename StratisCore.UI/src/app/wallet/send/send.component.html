@@ -3,15 +3,15 @@
   <h5 class="modal-title">Send to</h5>
   <!-- button close -->
   <button type="button" class="close closemodal ml-auto" (click)="activeModal.close('Close click')">
-    <i class="lnr lnr-cross-circle"></i>
+    <i class="lnr lnr-cross"></i>
   </button>
   <!-- /button close -->
 </div>
 <div class="modal-body ModalSend pt-0">
   <!-- TABS -->
   <div class="form-group clearfix mb-0">
-    <div>
-      <ngb-tabset type="pills" class="nav-fill">
+    <div class="mt-2">
+      <ngb-tabset type="tabs" class="nav-fill">
         <ngb-tab class="nav-link blue" title="{{ firstTitle }}">
           <ng-template ngbTabContent>
             <form [formGroup]="sendForm">
@@ -64,8 +64,8 @@
               <small *ngIf="apiError" class="text-danger">{{ apiError }}</small>
             </form>
             <div class="modal-footer p-0">
-              <button *ngIf="!isSending" type="button" [disabled]="isSending" class="btn btn-outline-light" (click)="activeModal.close('Close click')">Cancel</button>
-              <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block" [disabled]="!sendForm.valid || isSending || !estimatedFee" (click)="send()">Send</button>
+              <button *ngIf="!isSending" type="button" [disabled]="isSending" class="btn btn-danger text-uppercase" (click)="activeModal.close('Close click')">Cancel</button>
+              <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block text-uppercase" [disabled]="!sendForm.valid || isSending || !estimatedFee" (click)="send()">Send</button>
               <!-- SVG -->
               <div *ngIf="isSending" class="Loading LoadingSend col-2 mx-auto">
                 <svg width="30px" height="30px" viewBox="0 0 359 359" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -80,7 +80,7 @@
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab id="purple-bg" class="nav-link purple" title="{{ secondTitle }}">
+        <ngb-tab id="purple-bg" class="nav-link" title="{{ secondTitle }}">
           <ng-template ngbTabContent>
             <form [formGroup]="sendToSidechainForm">
               <!--<div class="form-group has-danger clearfix">-->
@@ -138,8 +138,8 @@
               <small *ngIf="apiError" class="text-danger">{{ apiError }}</small>
             </form>
             <div class="modal-footer p-0">
-              <button *ngIf="!isSending" type="button" [disabled]="isSending" class="btn btn-outline-light" (click)="activeModal.close('Close click')">Cancel</button>
-              <button *ngIf="!isSending" type="button" class="btn btn-purple btn-block" [disabled]="!sendToSidechainForm.valid || isSending || !estimatedSidechainFee" (click)="sendToSidechain()">Send</button>
+              <button *ngIf="!isSending" type="button" [disabled]="isSending" class="btn btn-danger text-uppercase" (click)="activeModal.close('Close click')">Cancel</button>
+              <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block text-uppercase" [disabled]="!sendToSidechainForm.valid || isSending || !estimatedSidechainFee" (click)="sendToSidechain()">Send</button>
               <!-- SVG -->
               <div *ngIf="isSending" class="Loading LoadingSend col-2 mx-auto">
                 <svg width="30px" height="30px" viewBox="0 0 359 359" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

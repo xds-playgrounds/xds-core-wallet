@@ -58,6 +58,7 @@ function createWindow() {
     title: "Solaris Core"
   });
 
+  
   if (serve) {
     require('electron-reload')(__dirname, {
     });

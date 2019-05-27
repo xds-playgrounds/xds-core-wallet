@@ -3,7 +3,7 @@
     <h5 class="modal-title">Receive</h5>
     <!-- button close -->
     <button type="button" class="close closemodal ml-auto" (click)="activeModal.close('Close click')">
-        <i class="lnr lnr-cross-circle"></i>
+        <i class="lnr lnr-cross"></i>
     </button>
     <!-- /button close -->
 </div>
@@ -15,7 +15,7 @@
             </div>
             <div class="col-9 mx-auto mb-4">
                 <code class="d-inline-block">{{ address }}</code>
-                <button type="button" class="btn btn-outline-secondary d-inline-block ml-2 btn-sm" ngbTooltip="Copy to clipboard"
+                <button type="button" class="btn btn-primary d-inline-block ml-2 btn-sm" ngbTooltip="Copy to clipboard"
                     ngxClipboard [cbContent]="address" (click)="onCopiedClick()">
                     <i class="lnr lnr-file-add"></i>
                 </button>
@@ -24,7 +24,7 @@
     </form>
 
     <div class="text-left">
-        <a *ngIf="showAll" class="link" (click)="showOneAddress()">← back to one address</a>
+        <a *ngIf="showAll" class="btn btn-primary" (click)="showOneAddress()">← back to one address</a>
     </div>
 
     <form *ngIf="showAll">

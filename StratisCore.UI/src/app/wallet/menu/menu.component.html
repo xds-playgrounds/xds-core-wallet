@@ -1,41 +1,31 @@
-<section id="GUI" class="light">
-  <nav class="navbar navbar-light bg-light justify-content-between">
-    <ul class="nav list-inline col-5">
-      <li class="nav-item list-inline-item">
-        <a class="nav-link" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
+<section id="GUI">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+    <img src="./assets/images/solaris-logo-small.png" width="30" class="ml-3 mr-2 mt-1 mb-1"/>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="dashboard" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-home mr-1"></span></span> Dashboard</a>
       </li>
-      <li class="nav-item list-inline-item">
-        <a class="nav-link" routerLink="history" routerLinkActive="active">History</a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="history" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-history mr-1"></span></span> History</a>
       </li>
-      <li class="nav-item list-inline-item">
-        <a class="nav-link" routerLink="message-signature" routerLinkActive="active">Sign</a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="message-signature" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-pencil mr-1"></span></span> Sign</a>
       </li>
-      <!-- <li *ngIf="testnet && !sidechainEnabled" class="nav-item list-inline-item">
-    <a class="nav-link" routerLink="staking" routerLinkActive="active">Cold Staking</a>
-  </li> -->
-      <li *ngIf="sidechainEnabled" class="nav-item list-inline-item">
-        <a class="nav-link" routerLink="smart-contracts" routerLinkActive="active">Smart Contracts</a>
+      <!--<li class="nav-item">
+    <a class="nav-link" routerLink="staking" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-star mr-1"></span></span> Cold Staking</a>
+  </li>-->
+      <li class="nav-item" *ngIf="sidechainEnabled">
+        <a class="nav-link" routerLink="smart-contracts" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-file-empty mr-1"></span></span> Smart Contracts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link cursor-pointer" (click)="openAddressBook()" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-book mr-1"></span></span> Address Book</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link cursor-pointer" routerLink="advanced" routerLinkActive="active" onclick="_menuOptions.setActive(this);"><span class="text-warning"><span class="lnr lnr-cog mr-1"></span></span> Advanced</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link cursor-pointer" (click)="logoutClicked()"><span class="text-warning"><span class="lnr lnr-exit mr-1"></span></span> Logout</a>
       </li>
     </ul>
-
-      <span class="navbar-brand mx-auto">
-        <a>
-          <img src="./assets/images/logo.svg" width="36" height="36" alt="Stratis">
-        </a>
-      </span>
-
-      <form class="form-inline col-5" style="max-width: none">
-          <div class="btn-group navbar-text ml-auto">
-              <div ngbDropdown class="d-inline-block">
-                  <button class="btn btn-outline-light" ngbDropdownToggle>{{walletName}}</button>
-                  <div ngbDropdownMenu class="dropdown-menu-right">
-                      <button class="dropdown-item d-flex align-items-center" type="button" (click)="openAddressBook()"><i class="lnr lnr-book"></i>Address Book</button>
-                      <button class="dropdown-item d-flex align-items-center" type="button" (click)="openAdvanced()"><i class="lnr lnr-cog"></i>Advanced</button>
-                      <div class="dropdown-divider"></div>
-                      <button class="dropdown-item d-flex align-items-center" type="button" data-toggle="modal" (click)="logoutClicked()" data-target="#modalLogout"><i class="lnr lnr-exit"></i> Logout</button>
-                  </div>
-              </div>
-          </div>
-      </form>
   </nav>
 </section>
