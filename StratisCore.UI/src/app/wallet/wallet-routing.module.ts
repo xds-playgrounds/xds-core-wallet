@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { WalletComponent }   from './wallet.component';
 import { HistoryComponent } from './history/history.component';
 import { MessageSignatureComponent } from './message-signature/message-signature.component';
+import { TxbitComponent } from './txbit/txbit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ColdStakingOverviewComponent } from './cold-staking/components/overview/overview.component';
 import { AdvancedComponent } from './advanced/advanced.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent},
     { path: 'history', component: HistoryComponent },
     { path: 'message-signature', component: MessageSignatureComponent },
+    { path: 'txbit', component: TxbitComponent },
     { path: 'staking', component: ColdStakingOverviewComponent },
     { path: 'advanced', component: AdvancedComponent,
       children: [

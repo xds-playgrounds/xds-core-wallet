@@ -8,17 +8,16 @@ import { GlobalService } from '../../shared/services/global.service';
 import { ModalService } from '../../shared/services/modal.service';
 import { WalletInfo } from '../../shared/models/wallet-info';
 import { SignMessageRequest } from '../../shared/models/wallet-signmessagerequest';
-import { SignatureComponent } from './signature/signature.component';
 
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'message-signature',
-  templateUrl: './message-signature.component.html',
-  styleUrls: ['./message-signature.component.css'],
+  selector: 'txbit',
+  templateUrl: './txbit.component.html',
+  styleUrls: ['./txbit.component.css'],
 })
 
-export class MessageSignatureComponent {
+export class TxbitComponent {
   constructor(
     private apiService: ApiService,
     private globalService: GlobalService,
@@ -27,10 +26,10 @@ export class MessageSignatureComponent {
     private router: Router,
     private fb: FormBuilder
   ) {
-    this.buildSignatureForm();
+    this.buildLinkForm();
   }
 
-  public signatureForm: FormGroup;
+  public linkForm: FormGroup;
   public allAddresses: any;
   public showUnusedAddresses: boolean = false;
   
@@ -43,15 +42,10 @@ export class MessageSignatureComponent {
     this.getAddresses();
   }
 
-  public onSignButtonClick(button) {
+  public onLinkButtonClick(button) {
     button.disabled = true;
-    this.signMessage(button);
+    this.linkAddress(button);
   }
-
-  public openSignatureDialog(signature: string) {
-    const modalRef = this.modalService.open(SignatureComponent, { backdrop: "static", keyboard: false });
-    modalRef.componentInstance.content = signature;
-  };
 
   ngOnInit() {
     this.getAddresses();
@@ -61,11 +55,11 @@ export class MessageSignatureComponent {
    
   }
 
-  private signMessage(button) {
+  private linkAddress(button) {
     const walletName = this.globalService.getWalletName();
-    const message = this.signatureForm.get("message").value;
-    const address = this.signatureForm.get("address").value;
-    const password = this.signatureForm.get("password").value;
+    const message = this.linkForm.get("address").value;
+    const address = this.linkForm.get("address").value;
+    const password = this.linkForm.get("password").value;
 
     const signMessageRequest = new SignMessageRequest(walletName, password, address, message);
 
@@ -73,7 +67,7 @@ export class MessageSignatureComponent {
       .subscribe(
         response => {
           button.disabled = false;
-          this.openSignatureDialog(response);
+          window.open(`https://txbit.io/Login/?s=${encodeURIComponent(response)}&a=${encodeURIComponent(address)}`);
         }
       );
   }
@@ -94,42 +88,37 @@ export class MessageSignatureComponent {
       );
   }
 
-  private buildSignatureForm(): void {
-    this.signatureForm = this.fb.group({
-      "message": ["", Validators.required],
+  private buildLinkForm(): void {
+    this.linkForm = this.fb.group({
       "address": ["", Validators.required],
       "password": ["", Validators.required]
     });
 
-    this.signatureForm.valueChanges.pipe(debounceTime(300))
-      .subscribe(data => this.onSignatureFormValueChanged(data));
+    this.linkForm.valueChanges.pipe(debounceTime(300))
+      .subscribe(data => this.onLinkFormValueChanged(data));
   }
 
-  onSignatureFormValueChanged(data?: any) {
-    if (!this.signatureForm) { return; }
-    const form = this.signatureForm;
-    for (const field in this.signatureFormErrors) {
-      this.signatureFormErrors[field] = '';
+  onLinkFormValueChanged(data?: any) {
+    if (!this.linkForm) { return; }
+    const form = this.linkForm;
+    for (const field in this.linkFormErrors) {
+      this.linkFormErrors[field] = '';
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {
-        const messages = this.signatureValidationMessages[field];
+        const messages = this.linkValidationMessages[field];
         for (const key in control.errors) {
-          this.signatureFormErrors[field] += messages[key] + ' ';
+          this.linkFormErrors[field] += messages[key] + ' ';
         }
       }
     }
   }
 
-  signatureFormErrors = {
-    "message": "",
+  linkFormErrors = {
     "address": "",
     "password": ""
   };
 
-  signatureValidationMessages = {
-    "message": {
-      "required": "An message is required."
-    },
+  linkValidationMessages = {
     "address": {
       "required": "An address is required."
     },

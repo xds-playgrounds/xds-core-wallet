@@ -22,6 +22,8 @@ import { SendConfirmationComponent } from './send/send-confirmation/send-confirm
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { LogoutConfirmationComponent } from './logout-confirmation/logout-confirmation.component';
 import { MessageSignatureComponent } from './message-signature/message-signature.component';
+import { SignatureComponent } from './message-signature/signature/signature.component';
+import { TxbitComponent } from './txbit/txbit.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
@@ -50,14 +52,17 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     AboutComponent,
     GenerateAddressesComponent,
     ResyncComponent,
-    MessageSignatureComponent
+    MessageSignatureComponent,
+    SignatureComponent,
+    TxbitComponent
   ],
   entryComponents: [
     SendComponent,
     SendConfirmationComponent,
     ReceiveComponent,
     TransactionDetailsComponent,
-    LogoutConfirmationComponent
+    LogoutConfirmationComponent,
+    SignatureComponent
   ]
 })
 
