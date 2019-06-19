@@ -16,4 +16,6 @@ export class SignatureComponent {
   }
 
   public content: string = "";
+  public address: string = "";
+  public message: string = "";
 }

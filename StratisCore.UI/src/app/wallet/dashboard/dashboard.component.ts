@@ -3,6 +3,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { ApiService } from '../../shared/services/api.service';
+import { TxbitService } from '../../shared/services/txbit.service';
 import { GlobalService } from '../../shared/services/global.service';
 import { ModalService } from '../../shared/services/modal.service';
 import { WalletInfo } from '../../shared/models/wallet-info';
@@ -11,6 +12,8 @@ import { TransactionInfo } from '../../shared/models/transaction-info';
 import { SendComponent } from '../send/send.component';
 import { ReceiveComponent } from '../receive/receive.component';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
+
+import { MarketSummaryResult } from '../../shared/models/txbit-marketsummaryresult';
 
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,7 +25,7 @@ import { Router } from '@angular/router';
 })
 
 export class DashboardComponent implements OnInit, OnDestroy {
-  constructor(private apiService: ApiService, private globalService: GlobalService, private modalService: NgbModal, private genericModalService: ModalService, private router: Router, private fb: FormBuilder) {
+  constructor(private apiService: ApiService, private globalService: GlobalService, private txbitService: TxbitService, private modalService: NgbModal, private genericModalService: ModalService, private router: Router, private fb: FormBuilder) {
     this.buildStakingForm();
   }
 
@@ -75,14 +78,53 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public openReceiveDialog() {
     const modalRef = this.modalService.open(ReceiveComponent, { backdrop: "static", keyboard: false });
-  };
+  };  
 
   public openTransactionDetailDialog(transaction: TransactionInfo) {
     const modalRef = this.modalService.open(TransactionDetailsComponent, { backdrop: "static", keyboard: false });
     modalRef.componentInstance.transaction = transaction;
   }
 
-  private getWalletBalance() {
+  public lastPrice: number;
+  public previousDayPrice: number;
+  public priceDifference: number;
+  public priceClass: string;
+  public priceIcon: string;
+  public priceChange: number;
+  public lowPrice: number;
+  public highPrice: number;
+  public baseVolume: number;
+
+  public spendableBalanceBaseValue: number;
+
+  private getMarketSummary() {
+    this.txbitService.getMarketSummary()
+      .subscribe(
+        response => {
+          this.lastPrice = response.result.Last;
+          this.previousDayPrice = response.result.PrevDay;
+          if (this.lastPrice < this.previousDayPrice) {
+            this.priceClass = "text-danger";
+            this.priceIcon = "lnr-arrow-down";
+          } else if (this.lastPrice > this.previousDayPrice) {
+            this.priceClass = "text-success";
+            this.priceIcon = "lnr-arrow-up";
+          } else {
+            this.priceClass = "text-lightblue";
+            this.priceIcon = "lnr-arrow-right";
+          }
+
+          this.priceChange = parseFloat((((this.lastPrice - this.previousDayPrice) / this.previousDayPrice) * parseFloat("100")).toFixed(2));
+          this.highPrice = response.result.High;
+          this.lowPrice = response.result.Low;
+          this.baseVolume = response.result.BaseVolume;
+
+          this.spendableBalanceBaseValue = parseFloat(((this.lastPrice * this.spendableBalance) / parseFloat("100000000")).toFixed(2));
+        });
+  }
+
+ 
+  private getWalletBalance(callBack) {
     let walletInfo = new WalletInfo(this.globalService.getWalletName());
     this.walletBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
       .subscribe(
@@ -97,6 +139,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } else {
             this.hasBalance = false;
           }
+
+          if (callBack)
+            callBack();
         },
         error => {
           if (error.status === 0) {
@@ -285,7 +330,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private startSubscriptions() {
-    this.getWalletBalance();
+    this.getWalletBalance(() => {
+      this.getMarketSummary();
+    });
     this.getHistory();
     if (!this.sidechainEnabled) {
       this.getStakingInfo();

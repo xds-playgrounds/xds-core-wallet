@@ -23,6 +23,7 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 import { LogoutConfirmationComponent } from './logout-confirmation/logout-confirmation.component';
 import { MessageSignatureComponent } from './message-signature/message-signature.component';
 import { SignatureComponent } from './message-signature/signature/signature.component';
+import { VerifyComponent } from './message-signature/verify/verify.component';
 import { TxbitComponent } from './txbit/txbit.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 
@@ -54,6 +55,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     ResyncComponent,
     MessageSignatureComponent,
     SignatureComponent,
+    VerifyComponent,
     TxbitComponent
   ],
   entryComponents: [
@@ -62,7 +64,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     ReceiveComponent,
     TransactionDetailsComponent,
     LogoutConfirmationComponent,
-    SignatureComponent
+    SignatureComponent,
+    VerifyComponent
   ]
 })
 

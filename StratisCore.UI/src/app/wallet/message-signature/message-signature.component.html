@@ -2,16 +2,14 @@
   <!-- CONTAINER -->
   <section id="content" class="col-10 mt-4 mx-auto">
 
-    <!-- CONTENT -->
-    <section class="col-12">
-      <ngb-tabset type="tabs" class="nav-fill">
-        <ngb-tab class="nav-link" title="Sign">
-          <ng-template ngbTabContent>
-            <div class="row">
-              <div class="col">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h3 class="title-bottom-border text-uppercase">Sign</h3>
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-body">
+            <section class="col-12">
+              <ngb-tabset type="tabs" class="nav-fill">
+                <ngb-tab class="nav-link" title="Sign">
+                  <ng-template ngbTabContent>
                     <form [formGroup]="signatureForm">
                       <div class="form-group">
                         <label>Signature address</label>
@@ -38,30 +36,37 @@
                         <button type="button" class="btn btn-block btn-lg btn-primary text-uppercase" (click)="onSignButtonClick($event.target)" [disabled]="!signatureForm.valid">Sign</button>
                       </div>
                     </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab class="nav-link" title="Verify">
-          <ng-template ngbTabContent>
-            <div class="row">
-              <div class="col">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h3 class="title-bottom-border text-uppercase">Verify</h3>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab class="nav-link" title="Verify">
+                  <ng-template ngbTabContent>
                     <form [formGroup]="verifyForm">
-          
+                      <div class="form-group">
+                        <label>Signature address</label>
+                        <input class="form-control" formControlName="address" [class.is-invalid]="verifyFormErrors.address" [class.is-valid]="!verifyFormErrors.address && verifyForm.get('address').valid" placeholder="Enter the address of the signature" />
+                        <div *ngIf="verifyFormErrors.address" class="invalid-feedback">{{ verifyFormErrors.address }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" placeholder="Enter the message that you want to verify" formControlName="message" [class.is-invalid]="verifyFormErrors.message" [class.is-valid]="!verifyFormErrors.message && verifyForm.get('message').valid"></textarea>
+                        <div *ngIf="verifyFormErrors.message" class="invalid-feedback">{{ verifyFormErrors.message }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label>Signature value</label>
+                        <input type="text" class="form-control" placeholder="Enter the signature value that you want to verify" formControlName="signature" [class.is-invalid]="verifyFormErrors.signatureValue" [class.is-valid]="!verifyFormErrors.signature && verifyForm.get('signature').valid" />
+                        <div *ngIf="verifyFormErrors.signature" class="invalid-feedback">{{ verifyFormErrors.signature }}</div>
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-block btn-lg btn-primary text-uppercase" (click)="onVerifyButtonClick($event.target)" [disabled]="!verifyForm.valid">Verify</button>
+                      </div>
                     </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
-    </section>
-    <!-- /CONTENT -->
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </section>

@@ -55,7 +55,10 @@ function createWindow() {
     frame: true,
     minWidth: 1150,
     minHeight: 650,
-    title: "Solaris Core"
+    title: "Solaris Core",
+    webPreferences: {
+      webSecurity: false
+    }
   });
 
   

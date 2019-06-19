@@ -8336,11 +8336,11 @@ a.text-secondary:focus, a.text-secondary:hover {
 }
 
 .text-success {
-  color: #28a745 !important;
+  color: #00ae52 !important;
 }
 
 a.text-success:focus, a.text-success:hover {
-  color: #1e7e34 !important;
+  color: #00ae52 !important;
 }
 
 .text-info {
@@ -8360,11 +8360,11 @@ a.text-warning:focus, a.text-warning:hover {
 }
 
 .text-danger {
-  color: #dc3545 !important;
+  color: #fe0048 !important;
 }
 
 a.text-danger:focus, a.text-danger:hover {
-  color: #bd2130 !important;
+  color: #fe0048 !important;
 }
 
 .text-light {
@@ -9188,7 +9188,7 @@ img {
   padding-bottom: 0 !important;
 }
 
-.ModalSend .nav-link.active {
+.nav-link.active {
   color: #fff !important;
 }
 

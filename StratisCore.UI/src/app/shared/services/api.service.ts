@@ -335,8 +335,8 @@ export class ApiService {
   /**
  * Verify the given signature with the given address
  */
-  verify(data: VerifyRequest): Observable<any> {
-    return this.http.post(this.stratisApiUrl + '/wallet/verify',  JSON.stringify(data)).pipe(
+  verifyMessage(data: VerifyRequest): Observable<any> {
+    return this.http.post(this.stratisApiUrl + '/wallet/verifymessage',  JSON.stringify(data)).pipe(
       catchError(err => this.handleHttpError(err))
     );
   }

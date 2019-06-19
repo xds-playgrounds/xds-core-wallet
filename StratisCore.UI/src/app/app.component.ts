@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { retryWhen, delay, tap } from 'rxjs/operators';
 
 import { ApiService } from './shared/services/api.service';
+import { TxbitService } from './shared/services/txbit.service';
 import { ElectronService } from 'ngx-electron';
 import { GlobalService } from './shared/services/global.service';
 
@@ -18,7 +19,7 @@ import { NodeStatus } from './shared/models/node-status';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private apiService: ApiService, private globalService: GlobalService, private titleService: Title, private electronService: ElectronService) { }
+  constructor(private router: Router, private apiService: ApiService, private globalService: GlobalService, private titleService: Title, private electronService: ElectronService, private txbitService: TxbitService) { }
 
   private subscription: Subscription;
   private readonly MaxRetryCount = 50;

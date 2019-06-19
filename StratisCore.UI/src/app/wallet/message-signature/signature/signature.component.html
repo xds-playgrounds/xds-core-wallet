@@ -16,12 +16,32 @@
     <div class="form-group">
       <button type="button" class="btn btn-primary"
               ngxClipboard [cbContent]="content" (click)="onCopiedClick()">
-        <i class="lnr lnr-file-add"></i> Copy
+        <i class="lnr lnr-file-add"></i> Copy signature value
+      </button>
+    </div>
+    <div class="form-group">
+      <label>Address</label>
+      <code style="word-break: break-all;" class="form-control">{{ address }}</code>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary"
+              ngxClipboard [cbContent]="address" (click)="onCopiedClick()">
+        <i class="lnr lnr-file-add"></i> Copy address
+      </button>
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <code style="word-break: break-all;" class="form-control">{{ message }}</code>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary"
+              ngxClipboard [cbContent]="message" (click)="onCopiedClick()">
+        <i class="lnr lnr-file-add"></i> Copy message
       </button>
     </div>
   </form>
   <div *ngIf="copied" class="alert alert-success alert-dismissible fade show mt-3 mb-0" role="alert">
-    The signature value has been copied to your clipboard
+    Copied to your clipboard
   </div>
 
 </div>

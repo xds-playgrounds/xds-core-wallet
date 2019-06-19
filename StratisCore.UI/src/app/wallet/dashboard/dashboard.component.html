@@ -9,8 +9,9 @@
               <h3 class="title-bottom-border">BALANCE</h3>
               <h1>
                 {{ (confirmedBalance | coinNotation) || (0 | coinNotation) }}
-                <small class="text-uppercase"> {{ coinUnit }}</small>
+                <span class="text-uppercase"> {{ coinUnit }}</span><span class="text-lightblue" style="font-size: 70%;"> ≈{{ spendableBalanceBaseValue }} BTC</span>
               </h1>
+              
               <ul class="list-unstyled text-lightblue">
                 <!-- <li><strong>{{ (awaitingMaturity | coinNotation) || (0 | coinNotation) }}</strong><em> (staking)</em></li> -->
                 <li><strong class="text-uppercase">{{ (unconfirmedBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
@@ -27,6 +28,48 @@
                   <i class="icon lnr lnr-arrow-up-circle mr-2"></i>
                   <span class="text-center text-uppercase">Send</span>
                 </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2 mt-2">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="title-bottom-border text-uppercase">Txbit XLR/BTC Statistics</h3>
+              <div class="row pl-2">
+                <div class="col">
+                  <h3 class="text-uppercase">
+                    PRICE
+                  </h3>
+                  <span class="{{ priceClass }}"><span class="lnr {{ priceIcon }}"></span> {{ lastPrice }} BTC</span>
+                </div>
+                <div class="col">
+                  <h3 class="text-uppercase">
+                    24H CHANGE
+                  </h3>
+                  <span class="{{ priceClass }}">{{ priceChange }} %</span>
+                </div>
+                <div class="col">
+                  <h3 class="text-uppercase">
+                    High
+                  </h3>
+                  <span>{{ highPrice }} BTC</span>
+                </div>
+                <div class="col">
+                  <h3 class="text-uppercase">
+                    Low
+                  </h3>
+                  <span>{{ lowPrice }} BTC</span>
+                </div>
+                <div class="col">
+                  <h3 class="text-uppercase">
+                    24H Volume
+                  </h3>
+                  <span>{{ baseVolume }} BTC</span>
+                </div>
               </div>
             </div>
           </div>
