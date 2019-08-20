@@ -4,9 +4,9 @@
       <div class="card">
         <div class="card-body">
           <div class="float-right">
-            <button class="btn btn-success text-uppercase" style="display: inline-block" (click)="addNewAddressClicked()"><span class="lnr lnr-plus-circle"></span> Add New Address</button>
+            <button class="btn btn-primary btn-sm mr-2 text-uppercase" style="display: inline-block" (click)="addNewAddressClicked()"><span class="lnr lnr-plus-circle"></span> Add New Address</button>
           </div>
-          <h3 class="title-bottom-border">Address book</h3>
+          <h3 class="clearfix title-bottom-border">Address book</h3>
           <div class="row">
             <ng-template #noAddresses>
               <div class="col-12 text-center">
@@ -16,8 +16,8 @@
           </div>
           <div *ngIf="addresses; else noAddresses">
             <div class="row" *ngFor="let addressRow of addresses">
-              <div class="card Addresses col-12 my-1">
-                <div class="card-body">
+              <div class="card border-0 Addresses col-12 my-1">
+                <div class="card-body rows pb-2">
                   <dl class="d-flex align-items-center mb-0">
                     <dt class="col-3 mb-0">{{addressRow.label}}</dt>
                     <dd class="col-6 mb-0">
@@ -30,7 +30,7 @@
                     </dd>
                     <dd class="col-3 mb-0 text-right">
                       <button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="sendClicked(addressRow)">Send</button>
-                      <button type="button" class="btn btn-lighter btn-sm ml-2" (click)="removeClicked(addressRow)"><i class="lnr lnr-trash"></i></button>
+                      <button type="button" class="btn btn-outline-danger btn-sm ml-2" (click)="removeClicked(addressRow)"><i class="lnr lnr-trash"></i></button>
                     </dd>
                   </dl>
                 </div>
