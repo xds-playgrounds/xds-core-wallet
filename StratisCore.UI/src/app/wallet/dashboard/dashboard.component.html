@@ -86,8 +86,9 @@
                 <input type="password" formControlName="walletPassword" class="form-control" id="inputPassword">
 
                 <span class="float-left pt-3 text-warning"><strong><i class="icon lnr lnr-warning"></i></strong> Unlock your wallet to start staking</span>
-                <button type="button" id="flipcard" class="btn btn-success float-right mt-2 text-uppercase" [disabled]="isStarting || !stakingForm.valid" (click)="startStaking()"><i class="icon lnr lnr-lock mr-2"></i> Unlock</button>
 
+                <button type="button" id="flipcard" class="btn btn-success float-right mt-2 text-uppercase" [disabled]="isStarting || !stakingForm.valid" (click)="startStaking()"><i class="icon lnr lnr-lock mr-2"></i> Unlock</button>
+                <button type="button" class="btn btn-primary float-right mt-2 text-uppercase mr-2" (click)="openSplitDialog()"><i class="icon lnr lnr-layers mr-2"></i> Split</button>
               </form>
               <div class="clearfix"></div>
             </div>
@@ -109,6 +110,7 @@
                   </ul>
                 </div>
                 <div class="col-12 text-right">
+                  <button type="button" class="btn btn-primary text-uppercase mr-2" (click)="openSplitDialog()"><i class="icon lnr lnr-layers mr-2"></i> Split</button>
                   <button type="button" class="btn btn-danger text-uppercase" [disabled]="isStopping" (click)="stopStaking()"><span class="lnr lnr-cross-circle mr-2"></span> Stop Staking</button>
                 </div>
               </div>

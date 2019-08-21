@@ -20,7 +20,7 @@ import { NodeStatus } from '../models/node-status';
 import { WalletRescan } from '../models/wallet-rescan';
 import { SignMessageRequest } from '../models/wallet-signmessagerequest';
 import { VerifyRequest } from '../models/wallet-verifyrequest';
-
+import { SplitCoins } from '../models/split-coins';
 @Injectable({
   providedIn: 'root'
 })
@@ -437,6 +437,15 @@ export class ApiService {
     */
   postCreateTransaction(transaction: any): Observable<any> {
     return this.http.post(this.stratisApiUrl + '/smartcontractwallet/create', transaction).pipe(
+      catchError(err => this.handleHttpError(err))
+    );
+  }
+
+  /*
+    * Posts a coin split request
+    */
+  postCoinSplit(splitCoins: SplitCoins): Observable<any> {
+    return this.http.post(this.stratisApiUrl + '/wallet/splitcoins', splitCoins).pipe(
       catchError(err => this.handleHttpError(err))
     );
   }

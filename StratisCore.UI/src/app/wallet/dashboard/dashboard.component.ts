@@ -11,6 +11,7 @@ import { TransactionInfo } from '../../shared/models/transaction-info';
 
 import { SendComponent } from '../send/send.component';
 import { ReceiveComponent } from '../receive/receive.component';
+import { SplitComponent } from '../split/split.component';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
 
 import { MarketSummaryResult } from '../../shared/models/txbit-marketsummaryresult';
@@ -74,6 +75,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public openSendDialog() {
     const modalRef = this.modalService.open(SendComponent, { backdrop: "static", keyboard: false });
+  }
+
+  public openSplitDialog() {
+    const modalRef = this.modalService.open(SplitComponent, { backdrop: "static", keyboard: false });
   }
 
   public openReceiveDialog() {

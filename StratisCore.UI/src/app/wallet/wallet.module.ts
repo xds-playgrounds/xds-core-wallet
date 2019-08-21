@@ -18,6 +18,7 @@ import { GenerateAddressesComponent } from './advanced/components/generate-addre
 import { ResyncComponent } from './advanced/components/resync/resync.component';
 import { SendComponent } from './send/send.component';
 import { ReceiveComponent } from './receive/receive.component';
+import { SplitComponent } from './split/split.component';
 import { SendConfirmationComponent } from './send/send-confirmation/send-confirmation.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { LogoutConfirmationComponent } from './logout-confirmation/logout-confirmation.component';
@@ -41,6 +42,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     DashboardComponent,
     SendComponent,
     ReceiveComponent,
+    SplitComponent,
     SendConfirmationComponent,
     TransactionDetailsComponent,
     LogoutConfirmationComponent,
@@ -62,6 +64,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     SendComponent,
     SendConfirmationComponent,
     ReceiveComponent,
+    SplitComponent,
     TransactionDetailsComponent,
     LogoutConfirmationComponent,
     SignatureComponent,
