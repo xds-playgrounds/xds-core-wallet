@@ -24,7 +24,7 @@
                       </div>
                       <div class="form-group">
                         <label>Message</label>
-                        <textarea class="form-control" placeholder="Enter the message that you want to sign" formControlName="message" [class.is-invalid]="signatureFormErrors.message" [class.is-valid]="!signatureFormErrors.message && signatureForm.get('message').valid"></textarea>
+                        <textarea class="form-control" style="height: 100px;" placeholder="Enter the message that you want to sign" formControlName="message" [class.is-invalid]="signatureFormErrors.message" [class.is-valid]="!signatureFormErrors.message && signatureForm.get('message').valid"></textarea>
                         <div *ngIf="signatureFormErrors.message" class="invalid-feedback">{{ signatureFormErrors.message }}</div>
                       </div>
                       <div class="form-group">
@@ -48,7 +48,7 @@
                       </div>
                       <div class="form-group">
                         <label>Message</label>
-                        <textarea class="form-control" placeholder="Enter the message that you want to verify" formControlName="message" [class.is-invalid]="verifyFormErrors.message" [class.is-valid]="!verifyFormErrors.message && verifyForm.get('message').valid"></textarea>
+                        <textarea class="form-control" style="height: 100px;" placeholder="Enter the message that you want to verify" formControlName="message" [class.is-invalid]="verifyFormErrors.message" [class.is-valid]="!verifyFormErrors.message && verifyForm.get('message').valid"></textarea>
                         <div *ngIf="verifyFormErrors.message" class="invalid-feedback">{{ verifyFormErrors.message }}</div>
                       </div>
                       <div class="form-group">
