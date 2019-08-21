@@ -42,6 +42,28 @@ export class ShowMnemonicComponent implements OnInit, OnDestroy {
     this.router.navigate(['']);
   }
 
+  public onSaveClicked() {
+    const dialog = require("electron").remote.dialog;
+    dialog.showSaveDialog(null,
+      {
+        filters: [
+          { name: "Text File", extensions: ["txt"] }
+        ]
+      }, (path) => {
+
+        var content = "";
+
+        for (let i = 0; i < this.mnemonicArray.length; i++) {
+          content += `${i+1}. ${this.mnemonicArray[i]}\r\n`;
+        }
+
+        var fs = require("fs");
+        fs.writeFileSync(path, content, "utf-8");
+
+        const shell = require('electron').shell;
+        shell.openItem(path);
+      });
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
