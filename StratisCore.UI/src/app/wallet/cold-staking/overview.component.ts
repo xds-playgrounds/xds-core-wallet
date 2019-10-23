@@ -114,7 +114,9 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             } else if (transaction.type === "received") {
                 transactionType = "received";
             } else if (transaction.type === "staked") {
-                transactionType = "staked";
+              transactionType = "staked";
+            } else {
+              transactionType = "unknown";
             }
             let transactionId = transaction.id;
             let transactionAmount = transaction.amount;
@@ -126,7 +128,6 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             }
             let transactionConfirmedInBlock = transaction.confirmedInBlock;
             let transactionTimestamp = transaction.timestamp;
-            let transactionConfirmed;
 
             this.transactions.push(new TransactionInfo(transactionType, transactionId, transactionAmount, transactionFee, transactionConfirmedInBlock, transactionTimestamp));
         }
