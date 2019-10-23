@@ -14,8 +14,6 @@ import { ReceiveComponent } from '../receive/receive.component';
 import { SplitComponent } from '../split/split.component';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
 
-import { MarketSummaryResult } from '../../shared/models/txbit-marketsummaryresult';
-
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -29,6 +27,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private apiService: ApiService, private globalService: GlobalService, private txbitService: TxbitService, private modalService: NgbModal, private genericModalService: ModalService, private router: Router, private fb: FormBuilder) {
     this.buildStakingForm();
   }
+  private stakingForm: FormGroup;
+  private walletBalanceSubscription: Subscription;
+  private walletHistorySubscription: Subscription;
+  private stakingInfoSubscription: Subscription;
+  private marketSummarySubscription: Subscription;
 
   public sidechainEnabled: boolean;
   public walletName: string;
@@ -37,10 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public unconfirmedBalance: number;
   public spendableBalance: number;
   public transactionArray: TransactionInfo[];
-  private stakingForm: FormGroup;
-  private walletBalanceSubscription: Subscription;
-  private walletHistorySubscription: Subscription;
-  private stakingInfoSubscription: Subscription;
   public stakingEnabled: boolean;
   public stakingActive: boolean;
   public stakingWeight: number;
@@ -103,7 +102,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public spendableBalanceBaseValue: number;
 
   private getMarketSummary() {
-    this.txbitService.getMarketSummary()
+    this.marketSummarySubscription = this.txbitService.getMarketSummary()
       .subscribe(
         response => {
           this.lastPrice = response.result.Last;
@@ -129,7 +128,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
  
-  private getWalletBalance(callBack) {
+  private getWalletBalance() {
     let walletInfo = new WalletInfo(this.globalService.getWalletName());
     this.walletBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
       .subscribe(
@@ -144,9 +143,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } else {
             this.hasBalance = false;
           }
-
-          if (callBack)
-            callBack();
         },
         error => {
           if (error.status === 0) {
@@ -331,12 +327,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.stakingInfoSubscription) {
       this.stakingInfoSubscription.unsubscribe();
     }
+
+    if (this.marketSummarySubscription) {
+      this.marketSummarySubscription.unsubscribe();
+    }
   }
 
   private startSubscriptions() {
-    this.getWalletBalance(() => {
-      this.getMarketSummary();
-    });
+    this.getMarketSummary();
+    this.getWalletBalance();
     this.getHistory();
     if (!this.sidechainEnabled) {
       this.getStakingInfo();

@@ -51,6 +51,7 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     private walletColdBalanceSubscription: Subscription;
     private walletHotBalanceSubscription: Subscription;
     private walletColdWalletExistsSubscription: Subscription;
+    private marketSummarySubscription: Subscription;
 
     ngOnInit() {
         this.coinUnit = this.globalService.getCoinUnit();
@@ -135,7 +136,7 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         }
     };
 
-    private getWalletBalance(callBack) {
+    private getWalletBalance() {
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
@@ -157,13 +158,10 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
                     this.spendableHotBalance = hotBalanceResponse.balances[0].spendableAmount;
                 }
             );
-
-        if (callBack)
-            callBack();
     }
 
     private getMarketSummary() {
-        this.txbitService.getMarketSummary()
+        this.marketSummarySubscription = this.txbitService.getMarketSummary()
             .subscribe(
                 response => {
                     this.lastPrice = response.result.Last;
@@ -190,6 +188,9 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         if (this.walletColdWalletExistsSubscription) {
             this.walletColdWalletExistsSubscription.unsubscribe();
         }
+        if (this.marketSummarySubscription) {
+          this.marketSummarySubscription.unsubscribe();
+        }
     };
 
     private startSubscriptions() {
@@ -198,9 +199,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         if (!this.coldWalletAccountExists)
           return;
 
-        this.getWalletBalance(() => {
-          this.getMarketSummary();
-        });
+        this.getMarketSummary();
+        this.getWalletBalance();
         this.getHistory();
     };
 }
