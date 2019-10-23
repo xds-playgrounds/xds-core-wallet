@@ -3,7 +3,7 @@
   <section id="content">
     <div class="container-fluid">
       <div class="row mb-2 mt-2">
-        <div class="col-6">
+        <div [class.col-6]="(hasBalance && !sidechainEnabled)" [class.col-12]="!(hasBalance && !sidechainEnabled)">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
               <h3 class="title-bottom-border">BALANCE</h3>
@@ -209,8 +209,10 @@
     </div>
 
     <ng-template #noTransactions>
-      <section class="col-12 text-center my-4">
-        <img src="./assets/images/notransactions.svg" alt="Click the down arrow for a receive address.">
+      <section class="col-12 text-center my-2">
+        <h2>It looks like there are no transactions</h2>
+        
+        <img src="../../../assets/images/notransactions.svg" alt="Click the down arrow for a receive address.">
       </section>
       <div class="col-12 text-center">
         <p>Click the down arrow for a receive address.</p>
