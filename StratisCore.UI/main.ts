@@ -59,7 +59,7 @@ function createWindow() {
     webPreferences: {
       webSecurity: false
     },
-    icon: path.join(__dirname, "src/assets/images/icon.ico")
+    icon: path.join(__dirname, "dist/assets/images/icon.ico")
   });
 
   
