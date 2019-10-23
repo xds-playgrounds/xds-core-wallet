@@ -50,11 +50,12 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     private walletHistorySubscription: Subscription;
     private walletColdBalanceSubscription: Subscription;
     private walletHotBalanceSubscription: Subscription;
+    private walletColdWalletExistsSubscription: Subscription;
 
     ngOnInit() {
         this.coinUnit = this.globalService.getCoinUnit();
         this.startSubscriptions();
-        this.stakingService.getInfo(this.globalService.getWalletName()).subscribe(x => this.coldWalletAccountExists = x.coldWalletAccountExists);
+
     }
 
     ngOnDestroy() {
@@ -73,10 +74,21 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         this.modalService.open(ColdStakingCreateComponent);
     }
 
-    private getHistory() {
-        if (!this.coldWalletAccountExists)
-          return;
+    private getColdWalletExists() {
+        this.walletColdWalletExistsSubscription = this.stakingService.getInfo(this.globalService.getWalletName()).subscribe(x => {
+            var isChanged = (x.coldWalletAccountExists !== this.coldWalletAccountExists);
 
+            if (isChanged)
+              this.cancelSubscriptions();
+
+            this.coldWalletAccountExists = x.coldWalletAccountExists;
+
+            if (isChanged)
+              this.startSubscriptions();
+        });
+    }
+
+    private getHistory() {
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
@@ -87,16 +99,6 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
                     if (!!response.history && response.history[0].transactionsHistory.length > 0) {
                         historyResponse = response.history[0].transactionsHistory;
                         this.getTransactionInfo(historyResponse);
-                    }
-                },
-                error => {
-                    if (error.status === 0) {
-                        this.cancelSubscriptions();
-                    } else if (error.status >= 400) {
-                        if (!error.error.errors[0].message) {
-                            this.cancelSubscriptions();
-                            this.startSubscriptions();
-                        }
                     }
                 }
             );
@@ -131,53 +133,30 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     };
 
     private getWalletBalance(callBack, isColdWallet) {
-      if (!this.coldWalletAccountExists)
-        return;
-
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
         this.walletColdBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
-          .subscribe(
-            coldBalanceResponse => {
-              this.confirmedColdBalance = coldBalanceResponse.balances[0].amountConfirmed;
-              this.unconfirmedColdBalance = coldBalanceResponse.balances[0].amountUnconfirmed;
-              this.spendableColdBalance = coldBalanceResponse.balances[0].spendableAmount;
-            },
-            error => {
-              if (error.status === 0) {
-                this.cancelSubscriptions();
-              } else if (error.status >= 400) {
-                if (!error.error.errors[0].message) {
-                  this.cancelSubscriptions();
-                  this.startSubscriptions();
+            .subscribe(
+                coldBalanceResponse => {
+                    this.confirmedColdBalance = coldBalanceResponse.balances[0].amountConfirmed;
+                    this.unconfirmedColdBalance = coldBalanceResponse.balances[0].amountUnconfirmed;
+                    this.spendableColdBalance = coldBalanceResponse.balances[0].spendableAmount;
                 }
-              }
-            }
-          );
+            );
 
         walletInfo.accountName = this.hotStakingAccount;
         this.walletHotBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
-          .subscribe(
-            hotBalanceResponse => {
-              this.confirmedHotBalance = hotBalanceResponse.balances[0].amountConfirmed;
-              this.unconfirmedHotBalance = hotBalanceResponse.balances[0].amountUnconfirmed;
-              this.spendableHotBalance = hotBalanceResponse.balances[0].spendableAmount;
-            },
-            error => {
-              if (error.status === 0) {
-                this.cancelSubscriptions();
-              } else if (error.status >= 400) {
-                if (!error.error.errors[0].message) {
-                  this.cancelSubscriptions();
-                  this.startSubscriptions();
+            .subscribe(
+                hotBalanceResponse => {
+                    this.confirmedHotBalance = hotBalanceResponse.balances[0].amountConfirmed;
+                    this.unconfirmedHotBalance = hotBalanceResponse.balances[0].amountUnconfirmed;
+                    this.spendableHotBalance = hotBalanceResponse.balances[0].spendableAmount;
                 }
-              }
-            }
-          );
+            );
 
         if (callBack)
-          callBack();
+            callBack();
     }
 
     private getMarketSummary() {
@@ -191,8 +170,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     }
 
     public openTransactionDetailDialog(transaction: TransactionInfo) {
-      const modalRef = this.modalService.open(TransactionDetailsComponent, { backdrop: "static", keyboard: false });
-      modalRef.componentInstance.transaction = transaction;
+        const modalRef = this.modalService.open(TransactionDetailsComponent, { backdrop: "static", keyboard: false });
+        modalRef.componentInstance.transaction = transaction;
     }
 
     private cancelSubscriptions() {
@@ -203,11 +182,19 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             this.walletColdBalanceSubscription.unsubscribe();
         }
         if (this.walletHotBalanceSubscription) {
-          this.walletHotBalanceSubscription.unsubscribe();
+            this.walletHotBalanceSubscription.unsubscribe();
+        }
+        if (this.walletColdWalletExistsSubscription) {
+            this.walletColdWalletExistsSubscription.unsubscribe();
         }
     };
 
     private startSubscriptions() {
+        this.getColdWalletExists();
+
+        if (!this.coldWalletAccountExists)
+          return;
+
         this.getWalletBalance(() => {
             this.getWalletBalance(() => {
                 this.getMarketSummary();

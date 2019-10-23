@@ -40,6 +40,6 @@
   <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block text-uppercase" [disabled]="!sendForm.valid || isSending || !estimatedFee" (click)="send()">Send</button>
   <!-- SVG -->
   <div *ngIf="isSending" class="Loading LoadingSend col-2 mx-auto">
-    <img src="./assets/images/loading.svg" width="30px" height="30px" />
+    <img src="../../../../assets/images/loading.svg" width="30" height="30" />
   </div>
 </div>

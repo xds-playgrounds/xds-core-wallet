@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, interval, throwError } from 'rxjs';
-import { catchError} from 'rxjs/operators';
+import { catchError, startWith, switchMap} from 'rxjs/operators';
 
 import { GlobalService } from './global.service';
 import { ModalService } from './modal.service';
@@ -39,7 +39,9 @@ export class ColdStakingService {
     const params = new HttpParams()
       .set('walletName', walletName);
 
-    return this.http.get<ColdStakingGetInfoResponse>(this.stratisApiUrl + '/coldstaking/cold-staking-info', { params }).pipe(
+    return this.pollingInterval.pipe(
+      startWith(0),
+      switchMap(() => this.http.get<ColdStakingGetInfoResponse>(this.stratisApiUrl + '/coldstaking/cold-staking-info', { params })),
       catchError(err => this.handleHttpError(err))
     );
   }
