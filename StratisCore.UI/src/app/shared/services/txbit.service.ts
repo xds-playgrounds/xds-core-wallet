@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, interval, throwError } from 'rxjs';
-import { catchError, switchMap, startWith} from 'rxjs/operators';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError} from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MarketSummary } from "../models/txbit-marketsummary";
 
 @Injectable({
@@ -15,11 +14,26 @@ export class TxbitService {
 
   private apiBaseUrl: string = "https://api.txbit.io/api";
   private http: HttpClient;
+  private marketSummary: Observable<MarketSummary>;
 
   public getMarketSummary(): Observable<MarketSummary> {
-    return this.http.get<MarketSummary>(this.apiBaseUrl + '/public/getmarketsummary?market=XLR/BTC').pipe(
-      catchError(err => this.handleHttpError(err))
-    );
+
+    if (!this.marketSummary) {
+      this.marketSummary = this.loadMarketSummary();
+
+      setTimeout(() => {
+        this.marketSummary = this.loadMarketSummary();
+      }, 60 * 1000 * 15);
+    }
+
+    return this.marketSummary;
+  }
+
+  private loadMarketSummary(): Observable<MarketSummary> {
+      return this.http.get<MarketSummary>(this.apiBaseUrl + '/public/getmarketsummary?market=XLR/BTC')
+      .pipe(
+        catchError(err => this.handleHttpError(err))
+      );
   }
 
   private handleHttpError(error: HttpErrorResponse, silent?: boolean) {

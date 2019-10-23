@@ -158,8 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           }
         }
-      )
-    ;
+      );
   }
 
   // todo: add history in seperate service to make it reusable

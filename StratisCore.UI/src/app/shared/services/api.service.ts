@@ -27,7 +27,7 @@ import { SplitCoins } from '../models/split-coins';
 export class ApiService {
   constructor(private http: HttpClient, private globalService: GlobalService, private modalService: ModalService, private router: Router) {
     this.setApiUrl();
-  };
+  }
 
   private pollingInterval = interval(5000);
   private apiPort;
@@ -170,7 +170,7 @@ export class ApiService {
   getWalletBalance(data: WalletInfo): Observable<any> {
     let params = new HttpParams()
       .set('walletName', data.walletName)
-      .set('accountName', "account 0");
+      .set('accountName', data.accountName);
     return this.pollingInterval.pipe(
       startWith(0),
       switchMap(() => this.http.get(this.stratisApiUrl + '/wallet/balance', { params })),
@@ -198,13 +198,13 @@ export class ApiService {
   getWalletHistory(data: WalletInfo): Observable<any> {
     let params = new HttpParams()
       .set('walletName', data.walletName)
-      .set('accountName', "account 0");
+      .set('accountName', data.accountName);
     return this.pollingInterval.pipe(
       startWith(0),
       switchMap(() => this.http.get(this.stratisApiUrl + '/wallet/history', { params: params })),
       catchError(err => this.handleHttpError(err))
     )
-  }
+  };
 
   /**
    * Get an unused receive address for a certain wallet from the API.

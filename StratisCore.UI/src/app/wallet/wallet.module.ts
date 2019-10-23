@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { WalletRoutingModule } from './wallet-routing.module';
-import { ColdStakingModule } from './cold-staking/cold-staking.module';
 import { SmartContractsModule } from './smart-contracts/smart-contracts.module';
 
 import { WalletComponent } from './wallet.component';
@@ -18,6 +17,12 @@ import { GenerateAddressesComponent } from './advanced/components/generate-addre
 import { ResyncComponent } from './advanced/components/resync/resync.component';
 import { SendComponent } from './send/send.component';
 import { ReceiveComponent } from './receive/receive.component';
+import { ColdStakingOverviewComponent } from './cold-staking/overview.component';
+import { ColdStakingCreateComponent } from './cold-staking/create/create.component';
+import { ColdStakingCreateSuccessComponent } from "./cold-staking/create-success/create-success.component";
+import { ColdStakingCreateAddressComponent } from "./cold-staking/create-address/create-address.component";
+import { ColdStakingWithdrawComponent } from "./cold-staking/withdraw/withdraw.component";
+import { ColdStakingWithdrawConfirmationComponent } from "./cold-staking/withdraw/withdraw-confirmation/withdraw-confirmation.component";
 import { SplitComponent } from './split/split.component';
 import { SendConfirmationComponent } from './send/send-confirmation/send-confirmation.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
@@ -28,11 +33,11 @@ import { VerifyComponent } from './message-signature/verify/verify.component';
 import { TxbitComponent } from './txbit/txbit.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 
+
 @NgModule({
   imports: [
     SharedModule,
     WalletRoutingModule,
-    ColdStakingModule,
     SmartContractsModule,
     BsDatepickerModule.forRoot()
   ],
@@ -58,7 +63,13 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     MessageSignatureComponent,
     SignatureComponent,
     VerifyComponent,
-    TxbitComponent
+    TxbitComponent,
+    ColdStakingOverviewComponent,
+    ColdStakingCreateComponent,
+    ColdStakingCreateSuccessComponent,
+    ColdStakingCreateAddressComponent,
+    ColdStakingWithdrawComponent,
+    ColdStakingWithdrawConfirmationComponent
   ],
   entryComponents: [
     SendComponent,
@@ -68,7 +79,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     TransactionDetailsComponent,
     LogoutConfirmationComponent,
     SignatureComponent,
-    VerifyComponent
+    VerifyComponent,
+    ColdStakingCreateComponent,
+    ColdStakingCreateSuccessComponent,
+    ColdStakingCreateAddressComponent,
+    ColdStakingWithdrawComponent,
+    ColdStakingWithdrawConfirmationComponent
   ]
 })
 
