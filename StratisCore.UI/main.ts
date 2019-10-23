@@ -58,7 +58,8 @@ function createWindow() {
     title: "Solaris Core",
     webPreferences: {
       webSecurity: false
-    }
+    },
+    icon: path.join(__dirname, "src/assets/images/icon.ico")
   });
 
   
