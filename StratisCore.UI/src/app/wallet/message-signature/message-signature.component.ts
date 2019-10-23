@@ -86,8 +86,9 @@ export class MessageSignatureComponent {
     const message = this.signatureForm.get("message").value;
     const address = this.signatureForm.get("address").value;
     const password = this.signatureForm.get("password").value;
+    const accountName = "account 0";
 
-    const signMessageRequest = new SignMessageRequest(walletName, password, address, message);
+    const signMessageRequest = new SignMessageRequest(walletName, accountName, password, address, message);
 
     this.apiService.signMessage(signMessageRequest)
       .subscribe(
@@ -122,7 +123,7 @@ export class MessageSignatureComponent {
           this.allAddresses = [];
 
           for (let address of response.addresses) {
-            if ((!address.isUsed && this.showUnusedAddresses) || address.isUsed) {
+            if (((!address.isUsed && this.showUnusedAddresses) || address.isUsed) && (!address.isChange)) {
               this.allAddresses.push(address);
             }
           }

@@ -16,7 +16,7 @@
                   <label>Staking address</label>
                   <select class="custom-select col-12 form-control" formControlName="address" [class.is-invalid]="linkFormErrors.address" [class.is-valid]="!linkFormErrors.address && linkForm.get('address').valid">
                     <option value="" disabled selected>Choose the address</option>
-                    <option *ngFor="let address of allAddresses" [value]="address.address">{{ address.address }}</option>
+                    <option *ngFor="let address of allAddresses" [value]="address.value">{{ address.key }}</option>
                   </select>
                   <div *ngIf="linkFormErrors.address" class="invalid-feedback">{{ linkFormErrors.address }}</div>
                 </div>

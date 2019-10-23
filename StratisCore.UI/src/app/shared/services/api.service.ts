@@ -237,7 +237,7 @@ export class ApiService {
   getAllAddresses(data: WalletInfo): Observable<any> {
     let params = new HttpParams()
       .set('walletName', data.walletName)
-      .set('accountName', "account 0");
+      .set('accountName', data.accountName);
     return this.http.get(this.stratisApiUrl + '/wallet/addresses', { params }).pipe(
       catchError(err => this.handleHttpError(err))
     );
