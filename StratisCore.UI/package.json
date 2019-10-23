@@ -1,17 +1,18 @@
 {
-  "name": "stratis-core",
+  "name": "solaris-core",
   "description": "Solaris Core Wallet",
-  "version": "1.1.1",
+  "version": "3.0.0",
   "author": {
-    "name": "Stratis Group Ltd.",
-    "email": "support@stratisplatform.com"
+    "name": "Solaris Platform",
+    "email": "support@solarisplatform.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/stratisproject/StratisCore",
+  "homepage": "https://github.com/SolarisPlatform/SolarisCore",
   "keywords": [
     "fullnode",
     "ui",
-    "stratis",
+    "solaris",
+	"solarisplatform",
     "core",
     "bitcoin",
     "angular",
