@@ -83,8 +83,10 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
 
             this.coldWalletAccountExists = x.coldWalletAccountExists;
 
-            if (isChanged)
-              this.startSubscriptions();
+            if (isChanged) 
+              setTimeout(() => {
+                this.startSubscriptions();
+              }, 2000);
         });
     }
 
