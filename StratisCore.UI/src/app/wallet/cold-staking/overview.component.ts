@@ -132,7 +132,7 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         }
     };
 
-    private getWalletBalance(callBack, isColdWallet) {
+    private getWalletBalance(callBack) {
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
@@ -196,11 +196,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
           return;
 
         this.getWalletBalance(() => {
-            this.getWalletBalance(() => {
-                this.getMarketSummary();
-            },
-                false);
-        }, true);
+          this.getMarketSummary();
+        });
         this.getHistory();
     };
 }
