@@ -74,6 +74,9 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     }
 
     private getHistory() {
+        if (!this.coldWalletAccountExists)
+          return;
+
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
@@ -128,6 +131,9 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     };
 
     private getWalletBalance(callBack, isColdWallet) {
+      if (!this.coldWalletAccountExists)
+        return;
+
         let walletInfo = new WalletInfo(this.globalService.getWalletName());
         walletInfo.accountName = this.coldStakingAccount;
 
