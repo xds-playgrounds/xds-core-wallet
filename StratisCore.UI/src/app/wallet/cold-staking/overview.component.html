@@ -5,6 +5,7 @@
         <div class="col-6">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
+              <i class="lnr lnr-question-circle float-right" data-placement="bottom" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
               <h3 class="title-bottom-border">COLD BALANCE</h3>
               <h1>
                 {{ (confirmedColdBalance | coinNotation) || (0 | coinNotation) }}
@@ -49,6 +50,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-body">
+              <i class="lnr lnr-question-circle float-right" data-html="true" data-placement="left" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time. Click 'SETUP COLD STAKING' to begin."></i>
               <h3 class="title-bottom-border text-uppercase">Setup cold staking</h3>
               <h4>
                 No cold staking has been setup for your account&hellip;<br />
