@@ -12,14 +12,15 @@ import { GlobalService } from '../../../shared/services/global.service';
 })
 export class ColdStakingCreateAddressComponent implements OnInit {
 
-    constructor(private globalService: GlobalService, private stakingService: ColdStakingService,
-        private activeModal: NgbActiveModal, private clipboardService: ClipboardService) { }
+    constructor(private globalService: GlobalService, private stakingService: ColdStakingService, private activeModal: NgbActiveModal, private clipboardService: ClipboardService) { }
 
     address = '';
     addressCopied = false;
 
+    public isColdStaking: boolean;
+
     ngOnInit() {
-        this.stakingService.getAddress(this.globalService.getWalletName(), true).subscribe(x => this.address = x.address);
+        this.stakingService.getAddress(this.globalService.getWalletName(), this.isColdStaking).subscribe(x => this.address = x.address);
     }
 
     closeClicked() {

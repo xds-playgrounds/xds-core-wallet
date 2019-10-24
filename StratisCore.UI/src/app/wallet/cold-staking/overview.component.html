@@ -15,13 +15,13 @@
                 <li><strong class="text-uppercase">{{ (unconfirmedColdBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
               </ul>
               <div class="float-right">
-                <a class="btn btn-primary" (click)="onWalletWithdraw()">
+                <button type="button" class="btn btn-primary" (click)="onWalletWithdraw(true)" [disabled]="confirmedColdBalance == 0">
                   <i class="icon lnr lnr-download mr-2"></i>
                   <span class="text-center text-uppercase">
                     Withdraw
                   </span>
-                </a>
-                <a class="btn btn-success ml-2" (click)="onSetup()">
+                </button>
+                <a class="btn btn-success ml-2" (click)="onColdSetup()">
                   <i class="icon lnr lnr-plus-circle mr-2"></i>
                   <span class="text-center text-uppercase">New setup</span>
                 </a>
@@ -41,26 +41,49 @@
               <ul class="list-unstyled text-lightblue">
                 <li><strong class="text-uppercase">{{ (unconfirmedHotBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
               </ul>
+              <div class="float-right">
+                <button type="button" class="btn btn-primary" (click)="onWalletWithdraw(false)" [disabled]="confirmedHotBalance == 0">
+                  <i class="icon lnr lnr-download mr-2"></i>
+                  <span class="text-center text-uppercase">
+                    Withdraw
+                  </span>
+                </button>
+                <button class="btn btn-success ml-2" (click)="onWalletGetFirstUnusedAddress(false)">
+                  <i class="icon lnr lnr-plus-circle mr-2"></i>
+                  <span class="text-center text-uppercase">Get address</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row mb-2 mt-2" *ngIf="!coldWalletAccountExists">
         <div class="col-12">
-          <div class="card mb-4">
+          <div class="card">
             <div class="card-body">
               <h3 class="title-bottom-border text-uppercase">Setup cold staking</h3>
-              <h4>
-                No cold staking has been setup for your account&hellip;<br />
-                <button type="button" class="btn btn-lg btn-success text-uppercase text-center mt-2" (click)="onSetup()"><span class="lnr lnr-plus-circle"></span> Setup cold staking</button>
-              </h4>
+              <h4 class="mb-2">No cold staking has been setup for your account&hellip;</h4>
+              <form [formGroup]="setupForm">
+                <div class="form-group font-italic mb-2">
+                  How will you use this wallet?
+                </div>
+                <div class="form-group mb-0">
+                  <input type="radio" id="becomeCold" class="mr-2 mt-1" name="setupType" formControlName="setupType" checked="checked" value="cold" /> <label for="becomeCold" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a cold wallet</label>
+                </div>
+                <div class="form-group mb-0">
+                  <input type="radio" id="becomeHot" class="mr-2 mt-1" name="setupType" formControlName="setupType" value="hot" /> <label for="becomeHot" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a hot wallet</label>
+                </div>
+                <div class="form-group mb-0">
+                  <button type="button" class="btn btn-success text-uppercase text-center mt-2" (click)="onSetup()" [disabled]="!setupForm.valid"><span class="lnr lnr-arrow-right-circle"></span> Next</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
       <div class="row mb-2 mt-2" *ngIf="coldWalletAccountExists">
         <div class="col-12">
-          <div class="card mb-4" *ngIf="transactions; else noTransactions">
+          <div class="card mb-4" *ngIf="transactions">
             <div class="card-body">
               <h3 class="title-bottom-border text-uppercase">Cold Staking History</h3>
               <div class="row row-header mr-1 ml-1">

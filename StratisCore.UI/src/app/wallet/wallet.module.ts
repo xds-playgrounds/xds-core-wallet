@@ -23,6 +23,7 @@ import { ColdStakingCreateSuccessComponent } from "./cold-staking/create-success
 import { ColdStakingCreateAddressComponent } from "./cold-staking/create-address/create-address.component";
 import { ColdStakingWithdrawComponent } from "./cold-staking/withdraw/withdraw.component";
 import { ColdStakingWithdrawConfirmationComponent } from "./cold-staking/withdraw/withdraw-confirmation/withdraw-confirmation.component";
+import { ColdStakingCreateHotComponent } from './cold-staking/create-hot/create-hot.component';
 import { SplitComponent } from './split/split.component';
 import { SendConfirmationComponent } from './send/send-confirmation/send-confirmation.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
@@ -69,7 +70,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     ColdStakingCreateSuccessComponent,
     ColdStakingCreateAddressComponent,
     ColdStakingWithdrawComponent,
-    ColdStakingWithdrawConfirmationComponent
+    ColdStakingWithdrawConfirmationComponent,
+    ColdStakingCreateHotComponent
   ],
   entryComponents: [
     SendComponent,
@@ -84,7 +86,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     ColdStakingCreateSuccessComponent,
     ColdStakingCreateAddressComponent,
     ColdStakingWithdrawComponent,
-    ColdStakingWithdrawConfirmationComponent
+    ColdStakingWithdrawConfirmationComponent,
+    ColdStakingCreateHotComponent
   ]
 })
 

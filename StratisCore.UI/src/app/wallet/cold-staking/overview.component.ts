@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GlobalService } from '../../shared/services/global.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -9,6 +10,7 @@ import { ColdStakingService } from '../../shared/services/coldstaking.service';
 import { ColdStakingCreateAddressComponent } from './create-address/create-address.component';
 import { ColdStakingWithdrawComponent } from './withdraw/withdraw.component';
 import { ColdStakingCreateComponent } from './create/create.component';
+import { ColdStakingCreateHotComponent } from './create-hot/create-hot.component';
 import { TransactionDetailsComponent } from '../transaction-details/transaction-details.component';
 import { TransactionInfo } from '../../shared/models/transaction-info';
 import { WalletInfo } from '../../shared/models/wallet-info';
@@ -21,7 +23,7 @@ import { Subscription } from 'rxjs';
 })
 export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
 
-    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, private modalService: NgbModal, private txbitService: TxbitService) { }
+    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, private modalService: NgbModal, private txbitService: TxbitService, private fb: FormBuilder) { }
 
     public coldWalletAccountExists: boolean;
     public transactions: TransactionInfo[];
@@ -31,8 +33,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
 
     public coinUnit: string;
 
-    public confirmedColdBalance: number;
-    public confirmedHotBalance: number;
+    public confirmedColdBalance: number = 0;
+    public confirmedHotBalance: number = 0;
 
     public unconfirmedColdBalance: number;
     public unconfirmedHotBalance: number;
@@ -53,26 +55,45 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     private walletColdWalletExistsSubscription: Subscription;
     private marketSummarySubscription: Subscription;
 
+    public setupForm: FormGroup;
+
     ngOnInit() {
+        this.buildSetupForm();
         this.coinUnit = this.globalService.getCoinUnit();
         this.startSubscriptions();
-
     }
 
     ngOnDestroy() {
         this.cancelSubscriptions();
     }
 
-    onWalletGetFirstUnusedAddress(walletComponent) {
-        this.modalService.open(ColdStakingCreateAddressComponent);
+    private buildSetupForm(): void {
+        this.setupForm = this.fb.group({
+            "setupType": ["", Validators.compose([Validators.required])]
+        });
     }
 
-    onWalletWithdraw(walletComponent) {
-        this.modalService.open(ColdStakingWithdrawComponent);
+    onWalletGetFirstUnusedAddress(isColdStaking: boolean) {
+        var modelRef = this.modalService.open(ColdStakingCreateAddressComponent);
+        modelRef.componentInstance.isColdStaking = isColdStaking;
+    }
+
+    onWalletWithdraw(isColdStaking: boolean) {
+        var modalRef = this.modalService.open(ColdStakingWithdrawComponent);
+        modalRef.componentInstance.isColdStaking = isColdStaking;
     }
 
     onSetup() {
-        this.modalService.open(ColdStakingCreateComponent);
+        var setupType = this.setupForm.get("setupType").value;
+        if (setupType === "cold") {
+            this.modalService.open(ColdStakingCreateComponent);
+        } else if (setupType === "hot") {
+            this.modalService.open(ColdStakingCreateHotComponent);
+        }
+    }
+
+    onColdSetup() {
+      this.modalService.open(ColdStakingCreateComponent);
     }
 
     private getColdWalletExists() {
@@ -80,14 +101,14 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             var isChanged = (x.coldWalletAccountExists !== this.coldWalletAccountExists);
 
             if (isChanged)
-              this.cancelSubscriptions();
+                this.cancelSubscriptions();
 
             this.coldWalletAccountExists = x.coldWalletAccountExists;
 
-            if (isChanged) 
-              setTimeout(() => {
-                this.startSubscriptions();
-              }, 2000);
+            if (isChanged)
+                setTimeout(() => {
+                    this.startSubscriptions();
+                }, 2000);
         });
     }
 
@@ -117,9 +138,9 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             } else if (transaction.type === "received") {
                 transactionType = "received";
             } else if (transaction.type === "staked") {
-              transactionType = "staked";
+                transactionType = "staked";
             } else {
-              transactionType = "unknown";
+                transactionType = "unknown";
             }
             let transactionId = transaction.id;
             let transactionAmount = transaction.amount;
@@ -189,7 +210,7 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
             this.walletColdWalletExistsSubscription.unsubscribe();
         }
         if (this.marketSummarySubscription) {
-          this.marketSummarySubscription.unsubscribe();
+            this.marketSummarySubscription.unsubscribe();
         }
     };
 
@@ -197,7 +218,7 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         this.getColdWalletExists();
 
         if (!this.coldWalletAccountExists)
-          return;
+            return;
 
         this.getMarketSummary();
         this.getWalletBalance();

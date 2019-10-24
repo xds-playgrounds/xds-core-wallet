@@ -1,9 +1,9 @@
 <section id="GUI">
   <section id="content">
     <div class="container-fluid">
-      <div class="row mb-2 mt-2">
+      <div class="row mb-2 mt-2" *ngIf="transactions">
         <div class="col-12">
-          <div class="card mb-4" *ngIf="transactions; else noTransactions">
+          <div class="card">
             <div class="card-body">
               <h3 class="title-bottom-border text-uppercase">Transaction History</h3>
 
@@ -56,10 +56,22 @@
               <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
             </div>
           </div>
-          <ng-template #noTransactions><em class="muted">Looks like you haven't made any transactions yet.</em></ng-template>
         </div>
       </div>
-
+      <div class="row mb-2 mt-2" *ngIf="!transactions">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="title-bottom-border text-uppercase">Transaction History</h3>
+              <div class="row">
+                <div class="col-12 ml-2">
+                  <h4>Looks like you haven't made any transactions yet.</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </section>

@@ -140,7 +140,7 @@
           </div>
         </div>
       </div>
-      <div class="row" *ngIf="transactionArray; else noTransactions">
+      <div class="row" *ngIf="transactionArray">
         <div class="col-12">
           <div class="card h-100">
             <div class="card-body">
@@ -201,23 +201,26 @@
           </div>
         </div>
       </div>
+      <div class="row" *ngIf="!transactionArray">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="title-bottom-border text-uppercase">Latest Transactions</h3>
+              <div class="row">
+                <div class="col-12 ml-2">
+                  <h4>Looks like you haven't made any transactions yet.</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12 pt-2">
           <status-bar></status-bar>
         </div>
       </div>
     </div>
-
-    <ng-template #noTransactions>
-      <section class="col-12 text-center my-2">
-        <h2>It looks like there are no transactions</h2>
-        
-        <img src="../../../assets/images/notransactions.svg" alt="Click the down arrow for a receive address.">
-      </section>
-      <div class="col-12 text-center">
-        <p>Click the down arrow for a receive address.</p>
-      </div>
-    </ng-template>
     <!-- /CONTENT -->
   </section>
   <!-- /CONTAINER-->

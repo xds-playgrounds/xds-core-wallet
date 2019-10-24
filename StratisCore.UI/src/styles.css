@@ -10949,3 +10949,6 @@ textarea {
   border-radius: .25em;
   box-shadow: none;
 }
+.text-transform-none {
+  text-transform: none !important;
+}

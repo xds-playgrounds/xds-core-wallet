@@ -8,9 +8,11 @@
   <div class="modal-body">
     <form [formGroup]="sendForm">
       <div class="form-group clearfix">
+        Enter the amount that you'd like to use for staking and we'll link that to the hot address.
+      </div>
+      <div class="form-group clearfix">
         <label class="float-left" for="amount">Amount</label>
         <label class="float-right" for="totalAmount">Spendable: {{ spendableBalance | coinNotation }} {{ coinUnit }}</label>
-        <!-- <span class="float-right btn-link" (click)="getMaxBalance()">max</span> -->
         <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.amount" [class.is-valid]="!sendFormErrors.amount && sendForm.get('amount').valid" formControlName="amount" placeholder="0.00 {{ coinUnit }}">
         <div *ngIf="sendFormErrors.amount" class="invalid-feedback">{{ sendFormErrors.amount }}</div>
       </div>
@@ -27,7 +29,7 @@
       </div>
       <div class="form-group clearfix">
         <label for="walletPassword">Wallet Password</label>
-        <input type="password" class="form-control" [class.is-invalid]="sendFormErrors.password" [class.is-valid]="!sendFormErrors.password && sendForm.get('password').valid" formControlName="password" id="walletPassword" placeholder="Please enter your wallet password." >
+        <input type="password" class="form-control" [class.is-invalid]="sendFormErrors.password" [class.is-valid]="!sendFormErrors.password && sendForm.get('password').valid" formControlName="password" id="walletPassword" placeholder="Please enter your wallet password.">
         <div *ngIf="sendFormErrors.password" class="invalid-feedback">{{sendFormErrors.password}}</div>
       </div>
       <small *ngIf="apiError" class="text-danger">{{ apiError }}</small>
@@ -37,7 +39,7 @@
       <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block text-uppercase" [disabled]="!sendForm.valid || isSending" (click)="send()">Send</button>
       <!-- SVG -->
       <div *ngIf="isSending" class="Loading LoadingSend col-2 mx-auto">
-        <img src="../../../../assets/images/loading.svg" width="30" height="30"/>
+        <img src="../../../../assets/images/loading.svg" width="30" height="30" />
       </div>
     </div>
   </div>
