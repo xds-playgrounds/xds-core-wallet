@@ -17,6 +17,7 @@
     <!--<div class="form-group has-success">-->
     <div class="form-group clearfix">
       <label for="destinationAddress">Destination address</label>
+      <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="You can use any address to withdraw your coins from Cold Balance, including your own."></i>
       <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.address" [class.is-valid]="!sendFormErrors.address && sendForm.get('address').valid" formControlName="address" id="destinationAddress" placeholder="Please enter the destination address here.">
       <div *ngIf="sendFormErrors.address" class="invalid-feedback">{{ sendFormErrors.address }}</div>
     </div>
