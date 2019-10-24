@@ -5,7 +5,7 @@
         <div class="col-6">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
-              <i class="lnr lnr-question-circle float-right" data-placement="bottom" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
+              <i class="lnr lnr-question-circle float-right" data-placement="left" ngbTooltip="Cold Balance shows your total balance of coins that you have setup to cold stake on a Hot Wallet. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
               <h3 class="title-bottom-border">COLD BALANCE</h3>
               <h1>
                 {{ (confirmedColdBalance | coinNotation) || (0 | coinNotation) }}
@@ -33,6 +33,7 @@
         <div class="col-6 pl-0">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
+              <i class="lnr lnr-question-circle float-right" data-placement="left" ngbTooltip="The Hot Balance shows the total amount of coins that have been delegated to this wallet to Cold Stake. This wallet must be always online to stake the delegated coins."></i>
               <h3 class="title-bottom-border">HOT BALANCE</h3>
               <h1>
                 {{ (confirmedHotBalance | coinNotation) || (0 | coinNotation) }}
@@ -43,12 +44,6 @@
                 <li><strong class="text-uppercase">{{ (unconfirmedHotBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
               </ul>
               <div class="float-right">
-                <button type="button" class="btn btn-primary" (click)="onWalletWithdraw(false)" [disabled]="confirmedHotBalance == 0">
-                  <i class="icon lnr lnr-download mr-2"></i>
-                  <span class="text-center text-uppercase">
-                    Withdraw
-                  </span>
-                </button>
                 <button class="btn btn-success ml-2" (click)="onWalletGetFirstUnusedAddress(false)">
                   <i class="icon lnr lnr-plus-circle mr-2"></i>
                   <span class="text-center text-uppercase">Get address</span>
@@ -62,7 +57,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <i class="lnr lnr-question-circle float-right" data-html="true" data-placement="left" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time. Click 'SETUP COLD STAKING' to begin."></i>
+              <i class="lnr lnr-question-circle float-right" data-html="true" data-placement="left" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
               <h3 class="title-bottom-border text-uppercase">Setup cold staking</h3>
               <h4 class="mb-2">No cold staking has been setup for your account&hellip;</h4>
               <form [formGroup]="setupForm">
@@ -70,10 +65,12 @@
                   How will you use this wallet?
                 </div>
                 <div class="form-group mb-0">
-                  <input type="radio" id="becomeCold" class="mr-2 mt-1" name="setupType" formControlName="setupType" checked="checked" value="cold" /> <label for="becomeCold" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a cold wallet</label>
+                  <input type="radio" id="becomeCold" class="mr-2 mt-1" name="setupType" formControlName="setupType" checked="checked" value="cold" /> <label for="becomeCold" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Cold Staking wallet</label>
+                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="Choose this option if you want to keep your coins in your own wallet while an always online Hot Wallet stakes them."></i>
                 </div>
                 <div class="form-group mb-0">
-                  <input type="radio" id="becomeHot" class="mr-2 mt-1" name="setupType" formControlName="setupType" value="hot" /> <label for="becomeHot" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a hot wallet</label>
+                  <input type="radio" id="becomeHot" class="mr-2 mt-1" name="setupType" formControlName="setupType" value="hot" /> <label for="becomeHot" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Hot Staking wallet</label>
+                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="Choose this option if you want to run an always online Hot Wallet which will be used to Cold Stake coins."></i>
                 </div>
                 <div class="form-group mb-0">
                   <button type="button" class="btn btn-success text-uppercase text-center mt-2" (click)="onSetup()" [disabled]="!setupForm.valid"><span class="lnr lnr-arrow-right-circle"></span> Next</button>
