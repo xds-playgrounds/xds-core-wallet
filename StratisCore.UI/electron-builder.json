@@ -1,5 +1,5 @@
 {
-  "appId": "com.stratisplatform.core",
+  "appId": "com.solarisplatform.core",
   "productName": "Solaris Core",
   "publish": null,
   "directories": {
@@ -33,7 +33,7 @@
       "deb",
       "tar.gz"
     ],
-    "synopsis": "StratisCore.UI: Stratis' staking wallet.",
+    "synopsis": "StratisCore.UI: Solaris' staking wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },
@@ -50,7 +50,7 @@
     "perMachine": true,
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": true,
-    "guid": "ef77eb40-01cf-4516-9da6-f3c6ba6854aa",
+    "guid": "84d5b240-9fee-4f49-ae5f-15f663189175",
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
     "license": "src/assets/images/license_en.txt"

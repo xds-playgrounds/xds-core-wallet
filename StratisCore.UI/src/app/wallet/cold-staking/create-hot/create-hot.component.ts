@@ -22,7 +22,7 @@ export class ColdStakingCreateHotComponent {
     feeTypes: FeeType[] = [];
     selectedFeeType: FeeType;
 
-    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, private activeModal: NgbActiveModal, private modalService: NgbModal, private routerService: Router, private fb: FormBuilder) {
+    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, public activeModal: NgbActiveModal, private modalService: NgbModal, private routerService: Router, private fb: FormBuilder) {
       this.buildSendForm();
     }
 
@@ -56,11 +56,11 @@ export class ColdStakingCreateHotComponent {
         this.apiError = "";
     }
 
-    private sendFormErrors = {
+    sendFormErrors = {
       'password': ''
     };
 
-    private sendValidationMessages = {
+    sendValidationMessages = {
       'password': {
             'required': 'Your password is required.'
         }

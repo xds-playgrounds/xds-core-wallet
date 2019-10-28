@@ -26,7 +26,7 @@ export class ColdStakingCreateComponent implements OnInit, OnDestroy {
     feeTypes: FeeType[] = [];
     selectedFeeType: FeeType;
 
-    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, private activeModal: NgbActiveModal, private modalService: NgbModal, private routerService: Router, private fb: FormBuilder) {
+    constructor(private apiService: ApiService, private globalService: GlobalService, private stakingService: ColdStakingService, public activeModal: NgbActiveModal, private modalService: NgbModal, private routerService: Router, private fb: FormBuilder) {
         this.setCoinUnit();
         this.setFeeTypes();
         this.buildSendForm();
@@ -84,13 +84,13 @@ export class ColdStakingCreateComponent implements OnInit, OnDestroy {
         this.apiError = "";
     }
 
-    private sendFormErrors = {
+    sendFormErrors = {
         'hotWalletAddress': '',
         'amount': '',
         'password': ''
     };
 
-    private sendValidationMessages = {
+    sendValidationMessages = {
         'hotWalletAddress': {
             'required': 'An hot wallet address is required.',
             'minlength': 'An hot wallet address is at least 26 characters long.'
