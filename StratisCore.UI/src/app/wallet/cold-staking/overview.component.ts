@@ -121,14 +121,14 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
 
     private getColdWalletExists() {
         this.walletColdWalletExistsSubscription = this.stakingService.getInfo(this.globalService.getWalletName()).subscribe(x => {
-            this.hotWalletAccountExists = x.hotWalletAccountExists;
 
-            var isChanged = (x.coldWalletAccountExists !== this.coldWalletAccountExists);
+            var isChanged = (x.coldWalletAccountExists !== this.coldWalletAccountExists || x.hotWalletAccountExists !== this.hotWalletAccountExists);
 
             if (isChanged)
                 this.cancelSubscriptions();
 
             this.coldWalletAccountExists = x.coldWalletAccountExists;
+            this.hotWalletAccountExists = x.hotWalletAccountExists;
 
             if (isChanged)
                 setTimeout(() => {
@@ -145,10 +145,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         this.walletColdHistorySubscription = this.apiService.getWalletHistory(walletInfo)
             .subscribe(
                 response => {
-                    console.log("Read cold");
-                    if (!!response.history && response.history[0].transactionsHistory.length > 0) {
+                  if (!!response.history && response.history[0].transactionsHistory.length > 0) {
                         historyResponse = response.history[0].transactionsHistory;
-                        console.log("Push cold");
                         this.getColdTransactionInfo(historyResponse);
                     }
                 }
@@ -163,10 +161,8 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
         this.walletHotHistorySubscription = this.apiService.getWalletHistory(walletInfo)
             .subscribe(
                 response => {
-                    console.log("Read hot");
-                    if (!!response.history && response.history[0].transactionsHistory.length > 0) {
+                  if (!!response.history && response.history[0].transactionsHistory.length > 0) {
                         historyResponse = response.history[0].transactionsHistory;
-                        console.log("Push hot");
                         this.getHotTransactionInfo(historyResponse);
                     }
                 }
