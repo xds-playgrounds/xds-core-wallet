@@ -85,12 +85,12 @@
                         <span>{{ dateTime }}</span>
                       </div>
                     </div>
-                    <div class="text-center">
-                      <div class="text-success">Staking is active <span class="lnr lnr-checkmark-circle"></span></div>
-                    </div>
                   </div>
                 </div>
-                <div class="col-12 text-right">
+                <div class="col-6 text-left">
+                  <span class="text-success">Staking is active <span class="lnr lnr-checkmark-circle"></span></span>
+                </div>
+                <div class="col-6 text-right">
                   <button type="button" class="btn btn-primary text-uppercase mr-2" (click)="openSplitDialog()"><i class="icon lnr lnr-layers mr-2"></i> Split</button>
                   <button type="button" class="btn btn-danger text-uppercase" [disabled]="isStopping" (click)="stopStaking()"><span class="lnr lnr-cross-circle mr-2"></span> Stop Staking</button>
                 </div>
