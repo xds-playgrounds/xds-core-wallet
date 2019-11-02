@@ -212,6 +212,7 @@ export class ApiService {
   getUnusedReceiveAddress(data: WalletInfo): Observable<any> {
     let params = new HttpParams()
       .set('walletName', data.walletName)
+      .set('segwit', 'true')
       .set('accountName', "account 0");
     return this.http.get(this.stratisApiUrl + '/wallet/unusedaddress', { params }).pipe(
       catchError(err => this.handleHttpError(err))
@@ -225,6 +226,7 @@ export class ApiService {
     let params = new HttpParams()
       .set('walletName', data.walletName)
       .set('accountName', "account 0")
+      .set('segwit', 'true')
       .set('count', count);
     return this.http.get(this.stratisApiUrl + '/wallet/unusedaddresses', { params }).pipe(
       catchError(err => this.handleHttpError(err))
@@ -237,6 +239,7 @@ export class ApiService {
   getAllAddresses(data: WalletInfo): Observable<any> {
     let params = new HttpParams()
       .set('walletName', data.walletName)
+      .set('segwit', 'true')
       .set('accountName', data.accountName);
     return this.http.get(this.stratisApiUrl + '/wallet/addresses', { params }).pipe(
       catchError(err => this.handleHttpError(err))

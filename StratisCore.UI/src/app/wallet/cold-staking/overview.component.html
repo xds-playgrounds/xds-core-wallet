@@ -44,76 +44,10 @@
                 <li><strong class="text-uppercase">{{ (unconfirmedHotBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
               </ul>
               <div class="float-right">
-                <button class="btn btn-primary ml-2" (click)="onWalletGetFirstUnusedAddress(false)">
+                <button class="btn btn-success ml-2" (click)="onWalletGetFirstUnusedAddress(false)">
                   <i class="icon lnr lnr-plus-circle mr-2"></i>
                   <span class="text-center text-uppercase">Get address</span>
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-2 mt-2" *ngIf="unconfirmedHotBalance + this.confirmedHotBalance > 0">
-        <div class="col-12">
-          <div class="card" style="min-height: 175px" *ngIf="!stakingEnabled">
-            <div class="card-body">
-              <h3 class="title-bottom-border text-uppercase">Hot Staking</h3>
-              <form [formGroup]="stakingForm">
-
-                <label class="text-uppercase" for="inputPassword">Password</label>
-                <input type="password" formControlName="walletPassword" class="form-control mb-3" id="inputPassword">
-
-                <span class="float-left pt-3 text-warning"><strong><i class="icon lnr lnr-warning"></i></strong> Unlock your wallet to start staking</span>
-
-                <button type="button" id="flipcard" class="btn btn-success float-right mt-2 text-uppercase" [disabled]="isStarting || !stakingForm.valid" (click)="startStaking()"><i class="icon lnr lnr-lock mr-2"></i> Unlock</button>
-              </form>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div id="staking" class="card" *ngIf="stakingEnabled">
-            <div class="card-body">
-              <h3 class="title-bottom-border text-uppercase">Hot Staking status</h3>
-              <div class="row">
-                <div class="col-12 mb-2">
-                  <div *ngIf="isStarting" class="d-flex justify-content-center">
-                    <img src="./assets/images/loading.svg" width="75" height="75" />
-                  </div>
-                  <div *ngIf="!isStarting">
-                    <div class="row ml-0" style="margin-bottom: 13px;">
-                      <div class="col">
-                        <h3 class="text-uppercase">
-                          AMOUNT
-                        </h3>
-                        <span>{{ stakingWeight | coinNotation | number: '1.0-0' }} {{ coinUnit }}</span>
-                      </div>
-                      <div class="col">
-                        <h3 class="text-uppercase">
-                          IMMATURE
-                        </h3>
-                        <span>{{ awaitingMaturity | coinNotation | number: '1.0-0' }} {{ coinUnit }}</span>
-                      </div>
-                      <div class="col">
-                        <h3 class="text-uppercase">
-                          NETWORK
-                        </h3>
-                        <span>{{ netStakingWeight | coinNotation | number: '1.0-0' }} {{ coinUnit }}</span>
-                      </div>
-                      <div class="col">
-                        <h3 class="text-uppercase">
-                          EST. REWARD
-                        </h3>
-                        <span>{{ dateTime }}</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-                <div class="col-6 text-left">
-                  <span class="text-success">Staking is active <span class="lnr lnr-checkmark-circle"></span></span>
-                </div>
-                <div class="col-6 text-right">
-                  <button type="button" class="btn btn-danger text-uppercase" [disabled]="isStopping" (click)="stopStaking()"><span class="lnr lnr-cross-circle mr-2"></span> Stop Staking</button>
-                </div>
               </div>
             </div>
           </div>
@@ -146,55 +80,9 @@
           </div>
         </div>
       </div>
-      <div class="row mb-2 mt-2" *ngIf="hotWalletAccountExists">
-        <div class="col-12">
-          <div class="card mb-4" *ngIf="hotTransactions">
-            <div class="card-body">
-              <h3 class="title-bottom-border text-uppercase">Hot Staking History</h3>
-              <div class="row row-header mr-1 ml-1">
-                <div class="col row-header-column">Type</div>
-                <div class="col row-header-column text-right">Amount</div>
-                <div class="col row-header-column text-center">Date</div>
-                <div class="col row-header-column text-right">Details</div>
-              </div>
-              <div class="row mr-1 ml-1">
-                <div class="col-12" *ngFor="let transaction of hotTransactions | paginate: { itemsPerPage: 10, currentPage: pageNumber }">
-                  <div class="row rows">
-                    <div class="col text-lightblue row-column">
-                      <span class="text-uppercase">
-                        <span class="bubble bg-warning" *ngIf="!transaction.transactionConfirmedInBlock"></span>
-                        <span class="bubble bg-success" *ngIf="transaction.transactionConfirmedInBlock"></span>
-                        {{ transaction.transactionType }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-right">
-                      <span>
-                        + {{ transaction.transactionAmount + transaction.transactionFee | coinNotation }} {{ coinUnit }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-center">
-                      <span>
-                        {{ transaction.transactionTimestamp * 1000 | date:'medium' }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-right">
-                      <span>
-                        <a class="link" (click)="openTransactionDetailDialog(transaction)">
-                          <i class="icon lnr lnr-arrow-right-circle"></i>
-                        </a>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row mb-2 mt-2" *ngIf="coldWalletAccountExists">
         <div class="col-12">
-          <div class="card mb-4" *ngIf="coldTransactions">
+          <div class="card mb-4" *ngIf="transactions">
             <div class="card-body">
               <h3 class="title-bottom-border text-uppercase">Cold Staking History</h3>
               <div class="row row-header mr-1 ml-1">
@@ -204,7 +92,7 @@
                 <div class="col row-header-column text-right">Details</div>
               </div>
               <div class="row mr-1 ml-1">
-                <div class="col-12" *ngFor="let transaction of coldTransactions | paginate: { itemsPerPage: 10, currentPage: pageNumber }">
+                <div class="col-12" *ngFor="let transaction of transactions | paginate: { itemsPerPage: 10, currentPage: pageNumber }">
                   <div class="row rows">
                     <div class="col text-lightblue row-column">
                       <span class="text-uppercase">

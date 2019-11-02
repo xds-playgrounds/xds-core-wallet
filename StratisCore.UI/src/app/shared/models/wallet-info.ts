@@ -5,4 +5,5 @@ export class WalletInfo {
 
   public walletName: string;
   public accountName: string = "account 0";
+  public segwit: boolean = true;
 }

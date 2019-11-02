@@ -1,6 +1,6 @@
 {
-  "appId": "com.solarisplatform.core",
-  "productName": "Solaris Core",
+  "appId": "com.obsidian.core",
+  "productName": "Obsidian Core",
   "publish": null,
   "directories": {
     "output": "app-builds"
@@ -25,8 +25,6 @@
     "target": [
       "nsis"
     ],
-    "signingHashAlgorithms": [ "sha256" ],
-    "certificateSubjectName": "CN=CryptSoft B.V., O=CryptSoft B.V., STREET=Siriusdreef 17-27, L=Hoofddorp, S=North-Holland, PostalCode=2132 WT, C=NL",
     "artifactName": "${productName}-v${version}-setup-${os}-${arch}.${ext}"
   },
   "linux": {
@@ -35,7 +33,7 @@
       "deb",
       "tar.gz"
     ],
-    "synopsis": "StratisCore.UI: Solaris' staking wallet.",
+    "synopsis": "StratisCore.UI: Obsidian' staking wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },
