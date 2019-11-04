@@ -2,9 +2,9 @@
 
 arch=x64
 configuration=Release  
-os_platform=linux
-log_prefix=LINUX-BUILD
-build_directory=$(dirname $PWD)
+os_platform=osx
+log_prefix=MAC-BUILD
+build_directory=$(dirname $PWD) #$(dirname $(dirname "$0"))
 
 # exit if error
 set -o errexit
@@ -32,17 +32,17 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/StratisBitcoinFullNode/src/Stratis.StratisD
+cd $build_directory/Obsidian-StratisNode/src/Obsidian.OxD
 dotnet restore
 dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
-echo $log_prefix chmoding the Stratis.StratisD file
-chmod +x $build_directory/StratisCore.UI/daemon/Stratis.StratisD
+echo $log_prefix chmoding the Redstone.RedstoneFullNodeD file
+chmod +x $build_directory/StratisCore.UI/daemon/Redstone.RedstoneFullNodeD
 
-# node Build
-cd $build_directory/StratisCore.UI
+# node packaging
 echo $log_prefix Building and packaging StratisCore.UI
-npm run package:linux
+cd $build_directory/StratisCore.UI
+npm run package:mac --$arch
 echo $log_prefix finished packaging
 
 echo $log_prefix contents of build_directory

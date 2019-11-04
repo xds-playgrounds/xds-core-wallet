@@ -1,18 +1,18 @@
 {
-  "name": "solaris-core",
-  "description": "Solaris Core Wallet",
-  "version": "3.0.0",
+  "name": "obsidian-core",
+  "description": "Obsidian Core Wallet",
+  "version": "0.0.1",
   "author": {
-    "name": "Solaris Platform",
-    "email": "support@solarisplatform.com"
+    "name": "Obsidian Platform",
+    "email": "support@Obsidian.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/SolarisPlatform/SolarisCore",
+  "homepage": "https://github.com/Obsidian/ObsidianCore",
   "keywords": [
     "fullnode",
     "ui",
-    "solaris",
-	"solarisplatform",
+    "obsidian",
+    "obsidianplatform",
     "core",
     "bitcoin",
     "angular",

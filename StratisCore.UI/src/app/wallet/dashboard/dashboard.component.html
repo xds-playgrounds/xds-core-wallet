@@ -56,7 +56,7 @@
               <div class="row">
                 <div class="col-12 mb-2">
                   <div *ngIf="isStarting" class="d-flex justify-content-center">
-                    <img src="./assets/images/loading.svg" width="75" height="75" />
+                    <img src="../../../assets/images/loading.svg" width="75" height="75" />
                   </div>
                   <div *ngIf="!isStarting">
                     <div class="row ml-0" style="margin-bottom: 13px;">
@@ -85,55 +85,14 @@
                         <span>{{ dateTime }}</span>
                       </div>
                     </div>
+                    <div class="text-center">
+                      <div class="text-success">Staking is active <span class="lnr lnr-checkmark-circle"></span></div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-6 text-left">
-                  <span class="text-success">Staking is active <span class="lnr lnr-checkmark-circle"></span></span>
-                </div>
-                <div class="col-6 text-right">
+                <div class="col-12 text-right">
                   <button type="button" class="btn btn-primary text-uppercase mr-2" (click)="openSplitDialog()"><i class="icon lnr lnr-layers mr-2"></i> Split</button>
                   <button type="button" class="btn btn-danger text-uppercase" [disabled]="isStopping" (click)="stopStaking()"><span class="lnr lnr-cross-circle mr-2"></span> Stop Staking</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-2 mt-2">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="title-bottom-border text-uppercase">Txbit XLR/BTC Statistics</h3>
-              <div class="row pl-2">
-                <div class="col">
-                  <h3 class="text-uppercase">
-                    PRICE
-                  </h3>
-                  <span class="{{ priceClass }}"><span class="lnr {{ priceIcon }}"></span> {{ lastPrice }} BTC</span>
-                </div>
-                <div class="col">
-                  <h3 class="text-uppercase">
-                    24H CHANGE
-                  </h3>
-                  <span class="{{ priceClass }}">{{ priceChange }} %</span>
-                </div>
-                <div class="col">
-                  <h3 class="text-uppercase">
-                    High
-                  </h3>
-                  <span>{{ highPrice }} BTC</span>
-                </div>
-                <div class="col">
-                  <h3 class="text-uppercase">
-                    Low
-                  </h3>
-                  <span>{{ lowPrice }} BTC</span>
-                </div>
-                <div class="col">
-                  <h3 class="text-uppercase">
-                    24H Volume
-                  </h3>
-                  <span>{{ baseVolume }} BTC</span>
                 </div>
               </div>
             </div>

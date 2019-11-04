@@ -49,6 +49,7 @@ export class ColdStakingService {
   getAddress(walletName: string, isColdWalletAddress: boolean): Observable<ColdStakingCreateAddressResponse> {
     const params = new HttpParams()
       .set('walletName', walletName)
+      .set('segwit', 'true')
       .set('isColdWalletAddress', isColdWalletAddress.toString().toLowerCase());
 
     return this.http.get<ColdStakingCreateAddressResponse>(this.stratisApiUrl + '/coldstaking/cold-staking-address', { params }).pipe(

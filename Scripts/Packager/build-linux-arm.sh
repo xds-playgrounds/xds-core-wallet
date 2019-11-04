@@ -4,7 +4,8 @@ arch=arm
 configuration=Release  
 os_platform=linux
 log_prefix=LINUXARM-BUILD
-build_directory=$(dirname $PWD)
+build_directory=$(dirname $(dirname "$PWD"))
+release_directory="/tmp/Obsidian/Release"
 
 # exit if error
 set -o errexit
@@ -13,9 +14,9 @@ set -o errexit
 echo "current environment variables:"
 echo "OS name:" $os_platform
 echo "Build directory:" $build_directory
+echo "Release directory:" $release_directory
 echo "Architecture:" $arch
 echo "Configuration:" $configuration
-
 dotnet --info
 
 # Initialize dependencies
@@ -26,34 +27,42 @@ git submodule update --init --recursive
 cd $build_directory/StratisCore.UI
 
 echo $log_prefix Running npm install
-npm install --verbose
+sudo npm install --verbose
 
 echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/StratisBitcoinFullNode/src/Stratis.StratisD
-dotnet restore
-dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
+cd $build_directory/Obsidian-StratisNode/src/Obsidian.OxD
+sudo dotnet restore
+sudo dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
-echo $log_prefix chmoding the Stratis.StratisD file
-chmod +x $build_directory/StratisCore.UI/daemon/Stratis.StratisD
+echo $log_prefix chmoding the Obsidian.OxD file
+sudo chmod +x $build_directory/StratisCore.UI/daemon/Obsidian.OxD
 
 # node Build
 cd $build_directory/StratisCore.UI
-echo $log_prefix Building and packaging StratisCore.UI
-npm run package:linuxarm
+echo $log_prefix Building and packaging Redstone Wallet
+sudo npm install
+sudo npm run package:linuxarm
 echo $log_prefix finished packaging
-
-echo $log_prefix contents of build_directory
-cd $build_directory
-ls
 
 echo $log_prefix contents of the app-builds folder
 cd $build_directory/StratisCore.UI/app-builds/
 # replace the spaces in the name with a dot as CI system have trouble handling spaces in names.
-for file in *.{tar.gz,deb}; do mv "$file" `echo $file | tr ' ' '.'` 2>/dev/null || : ; done
+for file in *.{tar.gz,deb,zip}; do mv "$file" `echo $file | tr ' ' '.'` 2>/dev/null || : ; done
+ls -al -h
 
-ls
+# Move files to release directory
+sudo mkdir -p $release_directory
+sudo cp $build_directory/StratisCore.UI/app-builds/* $release_directory #2>/dev/null
+
+#Clear previous builds
+sudo rm -rf $build_directory/StratisCore.UI/app-builds/*
+sudo rm -f $build_directory/StratisCore.UI/app-builds/*
 
 echo $log_prefix FINISHED build
+
+
+
+
