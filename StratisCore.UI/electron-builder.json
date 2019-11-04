@@ -30,8 +30,7 @@
   "linux": {
     "icon": "dist/assets/images/",
     "target": [
-      "deb",
-      "tar.gz"
+      "AppImage"
     ],
     "synopsis": "StratisCore.UI: Obsidian' staking wallet.",
     "category": "Utility",

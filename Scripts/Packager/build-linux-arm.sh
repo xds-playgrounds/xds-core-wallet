@@ -5,7 +5,7 @@ configuration=Release
 os_platform=linux
 log_prefix=LINUXARM-BUILD
 build_directory=$(dirname $(dirname "$PWD"))
-release_directory="/tmp/Redstone/Release"
+release_directory="/tmp/Obsidian/Release"
 
 # exit if error
 set -o errexit
@@ -33,12 +33,12 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/Redstone/src/Redstone/Programs/Redstone.RedstoneFullNodeD
+cd $build_directory/Obsidian-StratisNode/src/Obsidian.OxD
 sudo dotnet restore
 sudo dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
-echo $log_prefix chmoding the Redstone.RedstoneFullNodeD file
-sudo chmod +x $build_directory/StratisCore.UI/daemon/Redstone.RedstoneFullNodeD
+echo $log_prefix chmoding the Obsidian.OxD file
+sudo chmod +x $build_directory/StratisCore.UI/daemon/Obsidian.OxD
 
 # node Build
 cd $build_directory/StratisCore.UI
