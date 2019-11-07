@@ -2,7 +2,7 @@
   <section id="content pb-4">
     <div class="container-fluid">
       <div class="row mb-2 mt-2" *ngIf="coldWalletAccountExists">
-        <div class="col-6">
+        <div class="col">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
               <i class="lnr lnr-question-circle float-right" data-placement="left" ngbTooltip="Cold Balance shows your total balance of coins that you have setup to cold stake on a Hot Wallet. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
@@ -26,28 +26,6 @@
                   <i class="icon lnr lnr-plus-circle mr-2"></i>
                   <span class="text-center text-uppercase">New setup</span>
                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 pl-0">
-          <div class="card" style="min-height: 175px">
-            <div class="card-body">
-              <i class="lnr lnr-question-circle float-right" data-placement="left" ngbTooltip="The Hot Balance shows the total amount of coins that have been delegated to this wallet to Cold Stake. This wallet must be always online to stake the delegated coins."></i>
-              <h3 class="title-bottom-border">HOT BALANCE</h3>
-              <h1>
-                {{ (confirmedHotBalance | coinNotation) || (0 | coinNotation) }}
-                <span class="text-uppercase"> {{ coinUnit }}</span><span class="text-lightblue" style="font-size: 70%;"> ≈{{ spendableHotBalanceBaseValue }} BTC</span>
-              </h1>
-
-              <ul class="list-unstyled text-lightblue">
-                <li><strong class="text-uppercase">{{ (unconfirmedHotBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
-              </ul>
-              <div class="float-right">
-                <button class="btn btn-primary ml-2" (click)="onWalletGetFirstUnusedAddress(false)">
-                  <i class="icon lnr lnr-plus-circle mr-2"></i>
-                  <span class="text-center text-uppercase">Get address</span>
-                </button>
               </div>
             </div>
           </div>
@@ -121,73 +99,14 @@
       </div>
       <div class="row mb-2 mt-2" *ngIf="!coldWalletAccountExists">
         <div class="col-12">
-          <div class="card">
+          <div class="card mb-4">
             <div class="card-body">
               <i class="lnr lnr-question-circle float-right" data-html="true" data-placement="left" ngbTooltip="Cold Staking allows you to safely store the coins in your wallet, while a separate always online Hot Wallet stakes the coins. The Hot Wallet has no access to your coins and you can withdraw them from your Cold Balance to any address at any time."></i>
               <h3 class="title-bottom-border text-uppercase">Setup cold staking</h3>
-              <h4 class="mb-2">No cold staking has been setup for your account&hellip;</h4>
-              <form [formGroup]="setupForm">
-                <div class="form-group font-italic mb-2">
-                  How will you use this wallet?
-                </div>
-                <div class="form-group mb-0">
-                  <input type="radio" id="becomeCold" class="mr-2 mt-1" name="setupType" formControlName="setupType" checked="checked" value="cold" /> <label for="becomeCold" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Cold Staking wallet</label>
-                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="Choose this option if you want to keep your coins in your own wallet while an always online Hot Wallet stakes them."></i>
-                </div>
-                <div class="form-group mb-0">
-                  <input type="radio" id="becomeHot" class="mr-2 mt-1" name="setupType" formControlName="setupType" value="hot" /> <label for="becomeHot" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Hot Staking wallet</label>
-                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="Choose this option if you want to run an always online Hot Wallet which will be used to Cold Stake coins."></i>
-                </div>
-                <div class="form-group mb-0">
-                  <button type="button" class="btn btn-success text-uppercase text-center mt-2" (click)="onSetup()" [disabled]="!setupForm.valid"><span class="lnr lnr-arrow-right-circle"></span> Next</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-2 mt-2" *ngIf="hotWalletAccountExists">
-        <div class="col-12">
-          <div class="card mb-4" *ngIf="hotTransactions">
-            <div class="card-body">
-              <h3 class="title-bottom-border text-uppercase">Hot Staking History</h3>
-              <div class="row row-header mr-1 ml-1">
-                <div class="col row-header-column">Type</div>
-                <div class="col row-header-column text-right">Amount</div>
-                <div class="col row-header-column text-center">Date</div>
-                <div class="col row-header-column text-right">Details</div>
-              </div>
-              <div class="row mr-1 ml-1">
-                <div class="col-12" *ngFor="let transaction of hotTransactions | paginate: { itemsPerPage: 10, currentPage: pageNumber }">
-                  <div class="row rows">
-                    <div class="col text-lightblue row-column">
-                      <span class="text-uppercase">
-                        <span class="bubble bg-warning" *ngIf="!transaction.transactionConfirmedInBlock"></span>
-                        <span class="bubble bg-success" *ngIf="transaction.transactionConfirmedInBlock"></span>
-                        {{ transaction.transactionType }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-right">
-                      <span>
-                        + {{ transaction.transactionAmount + transaction.transactionFee | coinNotation }} {{ coinUnit }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-center">
-                      <span>
-                        {{ transaction.transactionTimestamp * 1000 | date:'medium' }}
-                      </span>
-                    </div>
-                    <div class="col text-white row-column text-right">
-                      <span>
-                        <a class="link" (click)="openTransactionDetailDialog(transaction)">
-                          <i class="icon lnr lnr-arrow-right-circle"></i>
-                        </a>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+              <h4>
+                No cold staking has been setup for your account&hellip;<br />
+                <button type="button" class="btn btn-lg btn-success text-uppercase text-center mt-2" (click)="onSetup()"><span class="lnr lnr-plus-circle"></span> Setup cold staking</button>
+              </h4>
             </div>
           </div>
         </div>

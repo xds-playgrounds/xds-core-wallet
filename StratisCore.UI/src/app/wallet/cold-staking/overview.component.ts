@@ -107,15 +107,6 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
     }
 
     onSetup() {
-        var setupType = this.setupForm.get("setupType").value;
-        if (setupType === "cold") {
-            this.modalService.open(ColdStakingCreateComponent);
-        } else if (setupType === "hot") {
-            this.modalService.open(ColdStakingCreateHotComponent);
-        }
-    }
-
-    onColdSetup() {
         this.modalService.open(ColdStakingCreateComponent);
     }
 
