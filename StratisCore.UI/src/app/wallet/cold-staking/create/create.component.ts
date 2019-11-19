@@ -154,6 +154,7 @@ export class ColdStakingCreateComponent implements OnInit, OnDestroy {
         const hotWalletAddress = this.sendForm.get("hotWalletAddress").value.trim();
         const accountName = "account 0";
         const segwitChangeAddress = true;
+        const PayToScript = true;
 
         this.stakingService.createColdStakingAccount(walletName, walletPassword, true)
           .subscribe(
@@ -167,7 +168,8 @@ export class ColdStakingCreateComponent implements OnInit, OnDestroy {
                       walletPassword,
                       accountName,
                       this.selectedFeeType.value,
-                      segwitChangeAddress                     
+                      segwitChangeAddress,
+                      PayToScript               
                     ))
                     .subscribe(
                       createColdstakingResponse => {
