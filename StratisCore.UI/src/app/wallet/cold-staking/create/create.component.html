@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h5 class="modal-title">Cold staking setup</h5>
+  <h5 class="modal-title">Delegated staking setup</h5>
   <button type="button" class="close closemodal ml-auto" data-dismiss="modal" aria-label="Close" (click)="activeModal.close('Close click')">
     <i class="lnr lnr-cross"></i>
   </button>
@@ -7,7 +7,7 @@
 <div class="modal-body">
   <form [formGroup]="sendForm">
     <div class="form-group clearfix">
-      Enter the amount that you'd like to use for staking and we'll link that to the hot address.
+      Enter the amount that you'd like to use for delegated staking and we'll link that to the hot address.
     </div>
     <div class="form-group clearfix">
       <label class="float-left" for="amount">Amount</label>
@@ -16,9 +16,9 @@
       <div *ngIf="sendFormErrors.amount" class="invalid-feedback">{{ sendFormErrors.amount }}</div>
     </div>
     <div class="form-group clearfix">
-      <label for="hotWalletAddress">Hot wallet address</label>
-      <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="This is the address of the wallet that will be always online and staking your coins. You can setup you own node and get a Hot Wallet address, or use a third-party Hot Wallet address to stake your coins."></i>
-      <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.hotWalletAddress" [class.is-valid]="!sendFormErrors.hotWalletAddress && sendForm.get('hotWalletAddress').valid" formControlName="hotWalletAddress" id="hotWalletAddress" placeholder="Please enter the hot wallet address here.">
+      <label for="hotWalletAddress">Delegated wallet address</label>
+      <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="This is the address of the wallet that will be always online and staking your coins. You can setup you own node and get a delegated staking address, or use a third-party delegated address to stake your coins."></i>
+      <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.hotWalletAddress" [class.is-valid]="!sendFormErrors.hotWalletAddress && sendForm.get('hotWalletAddress').valid" formControlName="hotWalletAddress" id="hotWalletAddress" placeholder="Please enter the delgated staking address here.">
       <div *ngIf="sendFormErrors.hotWalletAddress" class="invalid-feedback">{{ sendFormErrors.hotWalletAddress }}</div>
     </div>
     <div class="form-group clearfix">

@@ -8,7 +8,7 @@ export class ColdStakingSetup {
       walletAccount: string,
       fees: number,
       segwitChangeAddress: boolean,
-      PayToScript: boolean
+      payToScript: boolean
   ) {
     this.hotWalletAddress = hotWalletAddress;
     this.coldWalletAddress = coldWalletAddress;
@@ -18,7 +18,7 @@ export class ColdStakingSetup {
     this.walletAccount = walletAccount;
     this.fees = fees;
     this.segwitChangeAddress = segwitChangeAddress;
-    this.PayToScript = PayToScript;
+    this.payToScript = payToScript;
   }
   public hotWalletAddress: string;
   public coldWalletAddress: string;
@@ -28,5 +28,5 @@ export class ColdStakingSetup {
   public walletAccount: string;
   public fees: number;
   public segwitChangeAddress: boolean;
-  public PayToScript: boolean;
+  public payToScript: boolean;
 }
