@@ -2,7 +2,7 @@
   <section id="content pb-4">
     <div class="container-fluid">
       <div class="row mb-2 mt-2" *ngIf="coldWalletAccountExists">
-        <div class="col-6">
+        <div class="col-12">
           <div class="card" style="min-height: 175px">
             <div class="card-body">
               <i class="lnr lnr-question-circle float-right" data-placement="left" ngbTooltip="Delegated Staking Balance shows your total balance of coins that you have setup to stake on a Delegated Wallet. The Delegated Wallet has no access to your coins and you can withdraw to your spendable addresses balance at any time."></i>
@@ -37,23 +37,11 @@
             <div class="card-body">
               <i class="lnr lnr-question-circle float-right" data-html="true" data-placement="left" ngbTooltip="Delegated Staking Balance shows your total balance of coins that you have setup to stake on a Delegated Wallet. The Delegated Wallet has no access to your coins and you can withdraw to your spendable addresses balance at any time."></i>
               <h3 class="title-bottom-border text-uppercase">Setup delegated staking</h3>
-              <h4 class="mb-2">No delegated staking has been setup for your account&hellip;</h4>
-              <form [formGroup]="setupForm">
-                <div class="form-group font-italic mb-2">
-                  How will you use this wallet?
-                </div>
-                <div class="form-group mb-0">
-                  <input type="radio" id="becomeCold" class="mr-2 mt-1" name="setupType" formControlName="setupType" checked="checked" value="cold" /> <label for="becomeCold" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Delegated Staking wallet</label>
-                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="Choose this option if you want to keep your coins in your own wallet while an always online Delegated Wallet stakes them."></i>
-                </div>
-                <div class="form-group mb-0">
-                  <input type="radio" id="becomeHot" class="mr-2 mt-1" name="setupType" formControlName="setupType" value="hot" /> <label for="becomeHot" class="cursor-pointer text-white text-transform-none font-weight-normal">This will become a Delegated Staking wallet</label>
-                  <i class="lnr lnr-question-circle ml-2" data-placement="right" ngbTooltip="This option is deprecated."></i>
-                </div>
-                <div class="form-group mb-0">
-                  <button type="button" class="btn btn-success text-uppercase text-center mt-2" (click)="onSetup()" [disabled]="!setupForm.valid"><span class="lnr lnr-arrow-right-circle"></span> Next</button>
-                </div>
-              </form>
+              <h4 class="mb-2">Delegated staking hasn't been setup for your account&hellip;</h4>
+              <a class="btn btn-success ml-2" (click)="onColdSetup()">
+                <i class="icon lnr lnr-plus-circle mr-2"></i>
+                <span class="text-center text-uppercase">Setup Now</span>
+              </a>
             </div>
           </div>
         </div>
