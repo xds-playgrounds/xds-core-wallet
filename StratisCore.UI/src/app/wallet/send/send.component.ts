@@ -19,6 +19,8 @@ import { SendConfirmationComponent } from './send-confirmation/send-confirmation
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+type FeeType = { id: number, display: string, value: number };
+
 @Component({
   selector: 'send-component',
   templateUrl: './send.component.html',
@@ -27,7 +29,14 @@ import { debounceTime } from 'rxjs/operators';
 
 export class SendComponent implements OnInit, OnDestroy {
   @Input() address: string;
+
+  feeTypes: FeeType[] = [];
+  selectedFeeType: FeeType;
+
+
   constructor(private apiService: ApiService, private globalService: GlobalService, private modalService: NgbModal, private genericModalService: ModalService, public activeModal: NgbActiveModal, private fb: FormBuilder) {
+    this.setCoinUnit();
+    this.setFeeTypes();
     this.buildSendForm();
     this.buildSendToSidechainForm();
   }
@@ -42,6 +51,7 @@ export class SendComponent implements OnInit, OnDestroy {
   public estimatedSidechainFee: number = 0;
   public totalBalance: number = 0;
   public spendableBalance: number = 0;
+  public maxAmount: number = 0;
   public apiError: string;
   public firstTitle: string;
   public secondTitle: string;
@@ -61,7 +71,6 @@ export class SendComponent implements OnInit, OnDestroy {
       this.secondTitle = "Sidechain";
     }
     this.startSubscriptions();
-    this.coinUnit = this.globalService.getCoinUnit();
     if (this.address) {
       this.sendForm.patchValue({'address': this.address})
     }
@@ -71,10 +80,22 @@ export class SendComponent implements OnInit, OnDestroy {
     this.cancelSubscriptions();
   };
 
+  private setCoinUnit(): void {
+    this.coinUnit = this.globalService.getCoinUnit();
+  }
+
+  private setFeeTypes(): void {
+    this.feeTypes.push({ id: 0, display: 'Low - 0.0001 ' + this.coinUnit, value: 0.0001 });
+    this.feeTypes.push({ id: 1, display: 'Medium - 0.001 ' + this.coinUnit, value: 0.001 });
+    this.feeTypes.push({ id: 2, display: 'High - 0.01 ' + this.coinUnit, value: 0.01 });
+
+    this.selectedFeeType = this.feeTypes[0];
+  }
+
   private buildSendForm(): void {
     this.sendForm = this.fb.group({
       "address": ["", Validators.compose([Validators.required, Validators.minLength(26)])],
-      "amount": ["", Validators.compose([Validators.required, Validators.pattern(/^([0-9]+)?(\.[0-9]{0,8})?$/), Validators.min(0.00001), (control: AbstractControl) => Validators.max((this.spendableBalance - this.estimatedFee)/100000000)(control)])],
+      "amount": ["", Validators.compose([Validators.required, Validators.pattern(/^([0-9]+)?(\.[0-9]{0,8})?$/), Validators.min(0.00001), (control: AbstractControl) => Validators.max((this.spendableBalance - this.selectedFeeType.value)/100000000)(control)])],
       "fee": ["medium", Validators.required],
       "password": ["", Validators.required]
     });
@@ -194,30 +215,7 @@ export class SendComponent implements OnInit, OnDestroy {
       'required': 'Your password is required.'
     }
   };
-
-  public getMaxBalance() {
-    let data = {
-      walletName: this.globalService.getWalletName(),
-      feeType: this.sendForm.get("fee").value
-    }
-
-    let balanceResponse;
-
-    this.apiService.getMaximumBalance(data)
-      .subscribe(
-        response => {
-            balanceResponse = response;
-        },
-        error => {
-          this.apiError = error.error.errors[0].message;
-        },
-        () => {
-          this.sendForm.patchValue({amount: +new CoinNotationPipe().transform(balanceResponse.maxSpendableAmount)});
-          this.estimatedFee = balanceResponse.fee;
-        }
-      )
-  };
-
+  
   public estimateFee() {
     let transaction = new FeeEstimation(
       this.globalService.getWalletName(),
@@ -238,6 +236,12 @@ export class SendComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  public getMaxBalance() {
+
+    let maxAmount = this.spendableBalance - (this.selectedFeeType.value * 100000000);
+    this.sendForm.patchValue({ amount: maxAmount / 100000000 });
+  };
 
   public estimateSidechainFee() {
     let sidechainTransaction = new SidechainFeeEstimation(
@@ -270,7 +274,7 @@ export class SendComponent implements OnInit, OnDestroy {
       this.sendForm.get("amount").value,
       //this.sendForm.get("fee").value,
       // TO DO: use coin notation
-      this.estimatedFee / 100000000,
+      this.selectedFeeType.value,
       true,
       false
     );
@@ -279,7 +283,7 @@ export class SendComponent implements OnInit, OnDestroy {
       .buildTransaction(this.transaction)
       .subscribe(
         response => {
-          this.estimatedFee = response.fee;
+          this.selectedFeeType.value = response.fee;
           this.transactionHex = response.hex;
           if (this.isSending) {
             this.hasOpReturn = false;
@@ -379,7 +383,7 @@ export class SendComponent implements OnInit, OnDestroy {
   private openConfirmationModal() {
     const modalRef = this.modalService.open(SendConfirmationComponent, { backdrop: "static" });
     modalRef.componentInstance.transaction = this.transaction;
-    modalRef.componentInstance.transactionFee = this.estimatedFee ? this.estimatedFee : this.estimatedSidechainFee;
+    modalRef.componentInstance.transactionFee = this.selectedFeeType.value ? this.selectedFeeType.value : this.estimatedSidechainFee;
     modalRef.componentInstance.sidechainEnabled = this.sidechainEnabled;
     modalRef.componentInstance.hasOpReturn = this.hasOpReturn;
   }
