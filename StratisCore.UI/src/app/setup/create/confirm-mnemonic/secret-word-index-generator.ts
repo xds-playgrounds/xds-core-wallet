@@ -2,7 +2,7 @@ export class SecretWordIndexGenerator {
   private readonly textPrefix = 'Word number ';
   constructor() {
   const getRandom = (...taken) => {
-    const min = 0, max = 11;
+    const min = 0, max = 23;
     const getRandom = () => Math.floor(Math.random() * (max - min + 1) + min);
     var random = 0;
     while (taken.includes(random = getRandom())) { }
