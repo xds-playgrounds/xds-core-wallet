@@ -32,7 +32,7 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/Obsidian-StratisNode/src/Obsidian.OxD
+cd $build_directory/ObsidianX/src/Obsidian.OxD
 dotnet restore
 dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
