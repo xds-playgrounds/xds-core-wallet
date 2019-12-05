@@ -32,7 +32,7 @@
     "target": [
       "AppImage"
     ],
-    "synopsis": "StratisCore.UI: Obsidian' staking wallet.",
+    "synopsis": "ObsidianX Staking Wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },

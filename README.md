@@ -9,7 +9,7 @@ This is the repository of the ObsidianX Core Wallet, a full node staking wallet 
 # Building and running the ObsidianX Core daemon
 
 The ObsidianX Core daemon is the backend REST service, hosting a ObsidianX node upon which ObsidianX Core depends.  
-The ObsidianX Core daemon is hosted in another repository. All information on building and running the daemon can be found [here](https://github.com/obsidianproject/Obsidian-StratisNode/blob/master/Documentation/getting-started.md).
+The ObsidianX Core daemon is hosted in another repository. All information on building and running the daemon can be found [here](https://github.com/obsidianproject/ObsidianX/blob/master/Documentation/getting-started.md).
 
 # Building and running the ObsidianX Core user interface
 
@@ -41,7 +41,7 @@ npm install
 ## Run the UI in development mode
 
 #### Terminal Window 1
-[Run the daemon](https://github.com/obsidianproject/Obsidian-StratisNode/blob/master/Documentation/getting-started.md)  
+[Run the daemon](https://github.com/obsidianproject/ObsidianX/blob/master/Documentation/getting-started.md)  
 
 #### Terminal Window 2
 Use `npm run mainnet` to start the UI in mainnet mode or `npm run testnet` to start the UI in testnet mode.  

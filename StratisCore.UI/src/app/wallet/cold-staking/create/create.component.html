@@ -7,7 +7,7 @@
 <div class="modal-body">
   <form [formGroup]="sendForm">
     <div class="form-group clearfix">
-      Enter the amount that you'd like to use for delegated staking and we'll link that to the hot address.
+      Enter the amount that you'd like to use for delegated staking and we'll link that to the delegated staking address.
     </div>
     <div class="form-group clearfix">
       <label class="float-left" for="amount">Amount</label>
@@ -39,7 +39,7 @@
     <button *ngIf="!isSending" type="button" class="btn btn-primary btn-block text-uppercase" [disabled]="!sendForm.valid || isSending" (click)="send()">Send</button>
     <!-- SVG -->
     <div *ngIf="isSending" class="Loading LoadingSend col-2 mx-auto">
-      <img src="../../../../assets/images/loading.svg" width="30" height="30" />
+      <img src="./assets/images/loading.svg" width="30" height="30" />
     </div>
   </div>
 </div>

@@ -99,7 +99,7 @@ export class ApiService {
   getNewMnemonic(): Observable<any> {
     let params = new HttpParams()
       .set('language', 'English')
-      .set('wordCount', '12');
+      .set('wordCount', '24');
 
     return this.http.get(this.stratisApiUrl + '/wallet/mnemonic', { params }).pipe(
       catchError(err => this.handleHttpError(err))

@@ -1,9 +1,9 @@
 <section id="GUI" class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12 bg-dark pt-2 pb-2 border-bottom">
-      <img src="../../../../assets/images/solaris-login-logo.png" height="40" width="228" class="float-left" />
+      <img src="./assets/images/login-logo.png" height="40" width="150" class="float-left" />
 
-      <h4 class="float-right mt-2">The Secure Anonymous Messenger.</h4>
+      <h4 class="float-right mt-2">Secure Anonymous Messenger</h4>
     </div>
   </div>
   <div class="row d-flex justify-content-center mt-2">
@@ -36,7 +36,7 @@
               <button *ngIf="!isCreating" type="button" class="btn btn-success text-uppercase" [disabled]="!mnemonicForm.valid || isCreating" (click)="onConfirmClicked()">Confirm</button>
               <!-- SVG -->
               <div *ngIf="isCreating" class="text-center">
-                <img src="../../../../assets/images/loading.svg" />
+                <img src="./assets/images/loading.svg" />
               </div>
               <!-- /SVG -->
             </div>

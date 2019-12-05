@@ -1,3 +1,3 @@
-[submodule "Obsidian-StratisNode"]
-	path = Obsidian-StratisNode
-	url = https://github.com/obsidianproject/Obsidian-StratisNode.git
+[submodule "ObsidianX"]
+	path = ObsidianX
+	url = https://github.com/obsidianproject/ObsidianX.git
