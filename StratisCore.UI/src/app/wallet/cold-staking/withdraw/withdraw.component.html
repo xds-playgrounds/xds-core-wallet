@@ -11,7 +11,12 @@
       <label class="float-left" for="amount">Amount</label>
       <label class="float-right" for="totalAmount">Spendable: {{ spendableBalance | coinNotation }} {{ coinUnit }}</label>
       <!-- <span class="float-right btn-link" (click)="getMaxBalance()">max</span> -->
-      <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.amount" [class.is-valid]="!sendFormErrors.amount && sendForm.get('amount').valid" formControlName="amount" placeholder="0.00 {{ coinUnit }}">
+      <div class="input-group">
+        <input type="text" class="form-control" [class.is-invalid]="sendFormErrors.amount" [class.is-valid]="!sendFormErrors.amount && sendForm.get('amount').valid" formControlName="amount" placeholder="0.00 {{ coinUnit }}">
+      <span class="input-group-btn">
+        <button class="btn btn-primary btn-sm" (click)="getMaxBalance()">MAX</button>
+      </span>
+      </div>
       <div *ngIf="sendFormErrors.amount" class="invalid-feedback">{{ sendFormErrors.amount }}</div>
     </div>
     <!--<div class="form-group has-success">-->
@@ -22,11 +27,10 @@
       <div *ngIf="sendFormErrors.address" class="invalid-feedback">{{ sendFormErrors.address }}</div>
     </div>
     <div class="form-group clearfix">
-      <label>Transaction Fee</label>
-      <div>
-        <small *ngIf="!estimatedFee" class="blockText text-danger">Please enter a valid amount and destination address to calculate the fee.</small>
-        <label *ngIf="estimatedFee" class="blockText text-danger">{{ estimatedFee | coinNotation }} {{ coinUnit }}</label>
-      </div>
+      <label for="feeType">Fee type</label>
+      <select class="form-control" [(ngModel)]="selectedFeeType" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let feeType of feeTypes" [ngValue]="feeType" [selected]="feeType.id === 0">{{feeType.display}}</option>
+      </select>
     </div>
     <div class="form-group clearfix">
       <label for="walletPassword">Wallet Password</label>

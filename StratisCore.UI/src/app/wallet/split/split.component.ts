@@ -67,6 +67,12 @@ export class SplitComponent implements OnInit, OnDestroy {
     this.apiError = "";
   }
 
+  public getMaxAmount() {
+
+    let maxAmount = this.spendableBalance - (0.01 * 100000000);
+    this.splitForm.patchValue({ amount: maxAmount / 100000000 });
+  };
+
   splitFormErrors = {
     'utxos': '',
     'amount': '',
