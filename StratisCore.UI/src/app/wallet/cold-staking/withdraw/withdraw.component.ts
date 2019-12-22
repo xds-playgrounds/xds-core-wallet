@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 
-
+type FeeType = { id: number, display: string, value: number };
 
 @Component({
     selector: 'withdraw-component',
@@ -28,198 +28,220 @@ import { debounceTime } from 'rxjs/operators';
 })
 
 export class ColdStakingWithdrawComponent implements OnInit, OnDestroy {
-    @Input() address: string;
-    constructor(private apiService: ApiService, private globalService: GlobalService, private modalService: NgbModal, private genericModalService: ModalService, public activeModal: NgbActiveModal, private fb: FormBuilder, private stakingService: ColdStakingService) {
-        this.buildSendForm();
-    }
+  @Input() address: string;
 
-    public sendForm: FormGroup;
-    public hasOpReturn: boolean;
-    public coinUnit: string;
-    public isSending: boolean = false;
-    public estimatedFee: number = 0;
-    public totalBalance: number = 0;
-    public spendableBalance: number = 0;
-    public apiError: string;
-    public firstTitle: string;
-    public secondTitle: string;
-    public opReturnAmount: number = 0;
-    public isColdStaking: boolean;
-    private transactionHex: string;
-    private walletBalanceSubscription: Subscription;
-    private coldStakingAccount: string = "coldStakingColdAddresses";
-    private hotStakingAccount: string = "coldStakingHotAddresses";
+  feeTypes: FeeType[] = [];
+  selectedFeeType: FeeType;
 
-    ngOnInit() {
-        this.startSubscriptions();
-        this.coinUnit = this.globalService.getCoinUnit();
-    }
+  constructor(private apiService: ApiService, private globalService: GlobalService, private modalService: NgbModal, private genericModalService: ModalService, public activeModal: NgbActiveModal, private fb: FormBuilder, private stakingService: ColdStakingService) {
+    this.setCoinUnit();
+    this.setFeeTypes();
+    this.buildSendForm();
+  }
 
-    ngOnDestroy() {
-        this.cancelSubscriptions();
-    };
+  public sendForm: FormGroup;
+  public hasOpReturn: boolean;
+  public coinUnit: string;
+  public isSending: boolean = false;
+  public estimatedFee: number = 0;
+  public totalBalance: number = 0;
+  public spendableBalance: number = 0;
+  public apiError: string;
+  public firstTitle: string;
+  public secondTitle: string;
+  public opReturnAmount: number = 0;
+  public isColdStaking: boolean;
+  private transactionHex: string;
+  private walletBalanceSubscription: Subscription;
+  private coldStakingAccount: string = "coldStakingColdAddresses";
+  private hotStakingAccount: string = "coldStakingHotAddresses";
 
-    private getAccount(): string {
-      return this.isColdStaking ? this.coldStakingAccount : this.hotStakingAccount;
-    }
+  ngOnInit() {
+      this.startSubscriptions();
+  }
 
-    private buildSendForm(): void {
-        this.sendForm = this.fb.group({
-            "address": ["", Validators.compose([Validators.required, Validators.minLength(26)])],
-            "amount": ["", Validators.compose([Validators.required, Validators.pattern(/^([0-9]+)?(\.[0-9]{0,8})?$/), Validators.min(0.00001), (control: AbstractControl) => Validators.max((this.spendableBalance - this.estimatedFee) / 100000000)(control)])],
-            "fee": ["medium", Validators.required],
-            "password": ["", Validators.required]
-        });
+  ngOnDestroy() {
+      this.cancelSubscriptions();
+  };
 
-        this.sendForm.valueChanges.pipe(debounceTime(300))
-            .subscribe(data => this.onSendValueChanged(data));
-    }
+  private setCoinUnit(): void {
+    this.coinUnit = this.globalService.getCoinUnit();
+  }
 
-    onSendValueChanged(data?: any) {
-        if (!this.sendForm) { return; }
-        const form = this.sendForm;
-        for (const field in this.sendFormErrors) {
-            this.sendFormErrors[field] = '';
-            const control = form.get(field);
-            if (control && control.dirty && !control.valid) {
-                const messages = this.sendValidationMessages[field];
-                for (const key in control.errors) {
-                    this.sendFormErrors[field] += messages[key] + ' ';
-                }
-            }
-        }
+  private getAccount(): string {
+    return this.isColdStaking ? this.coldStakingAccount : this.hotStakingAccount;
+  }
 
-        this.apiError = "";
+  private setFeeTypes(): void {
+  this.feeTypes.push({ id: 0, display: 'Low - 0.0001 ' + this.coinUnit, value: 0.0001 });
+  this.feeTypes.push({ id: 1, display: 'Medium - 0.001 ' + this.coinUnit, value: 0.001 });
+  this.feeTypes.push({ id: 2, display: 'High - 0.01 ' + this.coinUnit, value: 0.01 });
 
-        if (this.sendForm.get("address").valid && this.sendForm.get("amount").valid) {
-            this.estimateFee();
-        }
-    }
+  this.selectedFeeType = this.feeTypes[0];
+  }
 
-    sendFormErrors = {
-        'address': '',
-        'amount': '',
-        'fee': '',
-        'password': ''
-    };
+  private buildSendForm(): void {
+      this.sendForm = this.fb.group({
+          "address": ["", Validators.compose([Validators.required, Validators.minLength(26)])],
+          "amount": ["", Validators.compose([Validators.required, Validators.pattern(/^([0-9]+)?(\.[0-9]{0,8})?$/), Validators.min(0.00001), (control: AbstractControl) => Validators.max((this.spendableBalance - this.selectedFeeType.value) / 100000000)(control)])],
+          "fee": ["medium", Validators.required],
+          "password": ["", Validators.required]
+      });
 
-    sendValidationMessages = {
-        'address': {
-            'required': 'An address is required.',
-            'minlength': 'An address is at least 26 characters long.'
-        },
-        'amount': {
-            'required': 'An amount is required.',
-            'pattern': 'Enter a valid transaction amount. Only positive numbers and no more than 8 decimals are allowed.',
-            'min': "The amount has to be more or equal to 0.00001 XLR.",
-            'max': 'The total transaction amount exceeds your spendable balance.'
-        },
-        'fee': {
-            'required': 'A fee is required.'
-        },
-        'password': {
-            'required': 'Your password is required.'
-        }
-    };
+      this.sendForm.valueChanges.pipe(debounceTime(300))
+          .subscribe(data => this.onSendValueChanged(data));
+  }
 
+  onSendValueChanged(data?: any) {
+      if (!this.sendForm) { return; }
+      const form = this.sendForm;
+      for (const field in this.sendFormErrors) {
+          this.sendFormErrors[field] = '';
+          const control = form.get(field);
+          if (control && control.dirty && !control.valid) {
+              const messages = this.sendValidationMessages[field];
+              for (const key in control.errors) {
+                  this.sendFormErrors[field] += messages[key] + ' ';
+              }
+          }
+      }
 
-    public estimateFee() {
-        let transaction = new FeeEstimation(
-            this.globalService.getWalletName(),
-            this.getAccount(),
-            this.sendForm.get("address").value.trim(),
-            this.sendForm.get("amount").value,
-            this.sendForm.get("fee").value,
-            true
-        );
+      this.apiError = "";
 
-        this.apiService.estimateFee(transaction)
-            .subscribe(
-                response => {
-                    this.estimatedFee = response;
-                },
-                error => {
-                    this.apiError = error.error.errors[0].message;
-                }
-            );
-    }
+      if (this.sendForm.get("address").valid && this.sendForm.get("amount").valid) {
+          this.estimateFee();
+      }
+  }
 
-    public buildTransaction() {
-        this.stakingService.withdrawColdStaking(new ColdStakingWithdrawalRequest(
-            this.sendForm.get("address").value.trim(),
-            this.sendForm.get("amount").value,
-            this.globalService.getWalletName(),
-            this.sendForm.get("password").value,
-            this.estimatedFee / 100000000
-        )).subscribe(withdrawal => {
-            this.transactionHex = withdrawal.transactionHex;
-            if (this.isSending) {
-                this.hasOpReturn = false;
-                this.sendTransaction(this.transactionHex);
-            }
-        },
-            error => {
-                this.isSending = false;
-                this.apiError = error.error.errors[0].message;
-            });
-    };
+  sendFormErrors = {
+      'address': '',
+      'amount': '',
+      'fee': '',
+      'password': ''
+  };
 
-    public send() {
-        this.isSending = true;
-        this.buildTransaction();
-    };
+  sendValidationMessages = {
+      'address': {
+          'required': 'An address is required.',
+          'minlength': 'An address is at least 26 characters long.'
+      },
+      'amount': {
+          'required': 'An amount is required.',
+          'pattern': 'Enter a valid transaction amount. Only positive numbers and no more than 8 decimals are allowed.',
+          'min': "The amount has to be more or equal to 0.00001 XLR.",
+          'max': 'The total transaction amount exceeds your spendable balance.'
+      },
+      'fee': {
+          'required': 'A fee is required.'
+      },
+      'password': {
+          'required': 'Your password is required.'
+      }
+  };
 
-    private sendTransaction(hex: string) {
-        let transaction = new TransactionSending(hex);
-        this.apiService
-            .sendTransaction(transaction)
-            .subscribe(
-                response => {
-                    this.activeModal.close("Close clicked");
-                    this.openConfirmationModal();
-                },
-                error => {
-                    this.isSending = false;
-                    this.apiError = error.error.errors[0].message;
-                }
-            );
-    }
+  public getMaxBalance() {
 
-    private getWalletBalance() {
-        let walletInfo = new WalletInfo(this.globalService.getWalletName());
-        walletInfo.accountName = this.getAccount();
+    let maxAmount = this.spendableBalance - (this.selectedFeeType.value * 100000000);
+    this.sendForm.patchValue({ amount: maxAmount / 100000000 });
+  };
 
-        this.walletBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
-            .subscribe(
-                response => {
-                    let balanceResponse = response;
-                    this.totalBalance = balanceResponse.balances[0].amountConfirmed + balanceResponse.balances[0].amountUnconfirmed;
-                    this.spendableBalance = balanceResponse.balances[0].spendableAmount;
-                },
-                error => {
-                    if (error.status === 0) {
-                        this.cancelSubscriptions();
-                    } else if (error.status >= 400) {
-                        if (!error.error.errors[0].message) {
-                            this.cancelSubscriptions();
-                            this.startSubscriptions();
-                        }
-                    }
-                }
-            );
-    };
+  public estimateFee() {
+      let transaction = new FeeEstimation(
+          this.globalService.getWalletName(),
+          this.getAccount(),
+          this.sendForm.get("address").value.trim(),
+          this.sendForm.get("amount").value,
+          this.sendForm.get("fee").value,
+          true
+      );
 
-    private openConfirmationModal() {
-        this.modalService.open(ColdStakingWithdrawConfirmationComponent, { backdrop: "static" });
-    }
+      this.apiService.estimateFee(transaction)
+          .subscribe(
+              response => {
+                  this.estimatedFee = response;
+              },
+              error => {
+                  this.apiError = error.error.errors[0].message;
+              }
+          );
+  }
 
-    private cancelSubscriptions() {
-        if (this.walletBalanceSubscription) {
-            this.walletBalanceSubscription.unsubscribe();
-        }
-    };
+  public buildTransaction() {
+      this.stakingService.withdrawColdStaking(new ColdStakingWithdrawalRequest(
+          this.sendForm.get("address").value.trim(),
+          this.sendForm.get("amount").value,
+          this.globalService.getWalletName(),
+          this.sendForm.get("password").value,
+          this.selectedFeeType.value
+      )).subscribe(withdrawal => {
+          this.transactionHex = withdrawal.transactionHex;
+          if (this.isSending) {
+              this.hasOpReturn = false;
+              this.sendTransaction(this.transactionHex);
+          }
+      },
+          error => {
+              this.isSending = false;
+              this.apiError = error.error.errors[0].message;
+          });
+  };
 
-    private startSubscriptions() {
-        this.getWalletBalance();
-    }
+  public send() {
+      this.isSending = true;
+      this.buildTransaction();
+  };
+
+  private sendTransaction(hex: string) {
+      let transaction = new TransactionSending(hex);
+      this.apiService
+          .sendTransaction(transaction)
+          .subscribe(
+              response => {
+                  this.activeModal.close("Close clicked");
+                  this.openConfirmationModal();
+              },
+              error => {
+                  this.isSending = false;
+                  this.apiError = error.error.errors[0].message;
+              }
+          );
+  }
+
+  private getWalletBalance() {
+      let walletInfo = new WalletInfo(this.globalService.getWalletName());
+      walletInfo.accountName = this.getAccount();
+
+      this.walletBalanceSubscription = this.apiService.getWalletBalance(walletInfo)
+          .subscribe(
+              response => {
+                  let balanceResponse = response;
+                  this.totalBalance = balanceResponse.balances[0].amountConfirmed + balanceResponse.balances[0].amountUnconfirmed;
+                  this.spendableBalance = balanceResponse.balances[0].spendableAmount;
+              },
+              error => {
+                  if (error.status === 0) {
+                      this.cancelSubscriptions();
+                  } else if (error.status >= 400) {
+                      if (!error.error.errors[0].message) {
+                          this.cancelSubscriptions();
+                          this.startSubscriptions();
+                      }
+                  }
+              }
+          );
+  };
+
+  private openConfirmationModal() {
+      this.modalService.open(ColdStakingWithdrawConfirmationComponent, { backdrop: "static" });
+  }
+
+  private cancelSubscriptions() {
+      if (this.walletBalanceSubscription) {
+          this.walletBalanceSubscription.unsubscribe();
+      }
+  };
+
+  private startSubscriptions() {
+      this.getWalletBalance();
+  }
 }
