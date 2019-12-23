@@ -51,7 +51,7 @@ echo $log_prefix finished packaging
 echo $log_prefix contents of the app-builds folder
 cd $build_directory/StratisCore.UI/app-builds/
 # replace the spaces in the name with a dot as CI system have trouble handling spaces in names.
-for file in *.{tar.gz,deb,AppImage}; do mv "$file" `echo $file | tr ' ' '.'` 2>/dev/null || : ; done
+for file in *.{tar.gz,deb,AppImage}; do sudo mv "$file" `echo $file | tr ' ' '.'` 2>/dev/null || : ; done
 ls -al -h
 
 # Move files to release directory
