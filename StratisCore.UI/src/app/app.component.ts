@@ -75,13 +75,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private setTitle() {
-    let applicationName = "Obsidian Core";
+    let applicationName = "XDS Core";
     let applicationVersion = this.globalService.getApplicationVersion();
     let newTitle = applicationName + " " + applicationVersion;
     this.titleService.setTitle(newTitle);
   }
 
   public openSupport() {
-    this.electronService.shell.openExternal("https://github.com/obsidianproject");
+    this.electronService.shell.openExternal("https://github.com/sonofsatoshi2020/xds.git");
   }
 }

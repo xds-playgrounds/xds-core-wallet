@@ -8,8 +8,8 @@ describe('stratis-core App', () => {
     page = new AngularElectronPage();
   });
 
-  it('Page title should be Obsidian Core', () => {
+  it('Page title should be XDS Core', () => {
     page.navigateTo('/');
-    expect(page.getTitle()).toEqual('Obsidian Core');
+    expect(page.getTitle()).toEqual('XDS Core');
   });
 });

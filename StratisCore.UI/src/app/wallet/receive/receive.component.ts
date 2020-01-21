@@ -55,7 +55,7 @@ export class ReceiveComponent {
         response => {
             this.address = response;
             // TODO: fix this later to use the actual sidechain name instead of 'cirrus'
-            const networkName = this.globalService.getSidechainEnabled() ? 'cirrus' : 'Obsidian';
+            const networkName = this.globalService.getSidechainEnabled() ? 'cirrus' : 'XDS';
             this.qrString = `${networkName}:${response}`;
         }
       );

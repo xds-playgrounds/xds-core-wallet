@@ -18,9 +18,9 @@ nodaemon = args.some(val => val === "--nodaemon" || val === "-nodaemon");
 
 let apiPort;
 if (testnet && !sidechain) {
-  apiPort = 47221;
+  apiPort = 48334;
 } else if (!testnet && !sidechain) {
-  apiPort = 47221;
+  apiPort = 48334;
 } else if (sidechain && testnet) {
   apiPort = 38225;
 } else if (sidechain && !testnet) {
@@ -55,7 +55,7 @@ function createWindow() {
     frame: true,
     minWidth: 1150,
     minHeight: 650,
-    title: "Obsidian Core",
+    title: "XDS Core",
     webPreferences: {
       webSecurity: false
     },
@@ -107,7 +107,7 @@ app.on('ready', () => {
     if (sidechain && !nodaemon) {
       startDaemon("Stratis.SidechainD");
     } else if (!nodaemon) {
-      startDaemon("Obsidian.OxD")
+      startDaemon("Daemon")
     }
   }
   createTray();
@@ -185,7 +185,7 @@ function startDaemon(daemonName) {
   });
 
   daemonProcess.stdout.on('data', (data) => {
-    writeLog(`Obsidian: ${data}`);
+    writeLog(`XDS: ${data}`);
   });
 }
 
@@ -213,7 +213,7 @@ function createTray() {
       }
     }
   ]);
-  systemTray.setToolTip('Obsidian Core');
+  systemTray.setToolTip('XDS Core');
   systemTray.setContextMenu(contextMenu);
   systemTray.on('click', function() {
     if (!mainWindow.isVisible()) {

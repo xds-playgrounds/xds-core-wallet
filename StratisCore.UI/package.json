@@ -1,18 +1,18 @@
 {
-  "name": "obsidian-core",
-  "description": "Obsidian Core Wallet",
+  "name": "XDS-core",
+  "description": "XDS Core Wallet",
   "version": "1.0.1",
   "author": {
-    "name": "Obsidian Platform",
-    "email": "support@Obsidian.com"
+    "name": "XDS Platform",
+    "email": "support@XDS.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/Obsidian/ObsidianCore",
+  "homepage": "https://github.com/sonofsatoshi2020/xds.git",
   "keywords": [
     "fullnode",
     "ui",
-    "obsidian",
-    "obsidianplatform",
+    "XDS",
+    "XDSplatform",
     "core",
     "bitcoin",
     "angular",

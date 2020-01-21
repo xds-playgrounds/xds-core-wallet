@@ -1,6 +1,6 @@
 {
-  "appId": "com.obsidian.core",
-  "productName": "Obsidian Core",
+  "appId": "com.xds.core",
+  "productName": "XDS Core",
   "publish": null,
   "directories": {
     "output": "app-builds"
@@ -32,7 +32,7 @@
     "target": [
       "AppImage"
     ],
-    "synopsis": "ObsidianX Staking Wallet.",
+    "synopsis": "XDS Staking Wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },
