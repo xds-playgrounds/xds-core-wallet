@@ -5,7 +5,7 @@ configuration=Release
 os_platform=linux
 log_prefix=LINUX-BUILD
 build_directory=$(dirname $(dirname "$PWD"))
-release_directory="/tmp/Obsidian/Release"
+release_directory="/tmp/xds/${log_prefix}"
 
 # exit if error
 set -o errexit
@@ -33,13 +33,13 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/ObsidianX/src/Obsidian.OxD
+cd $build_directory/xds/src/daemon
 sudo dotnet clean
 sudo dotnet restore
 sudo dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
-echo $log_prefix chmoding the Obsidian.OxD file
-sudo chmod +x $build_directory/StratisCore.UI/daemon/Obsidian.OxD
+echo $log_prefix chmoding the xds file
+sudo chmod +x $build_directory/StratisCore.UI/daemon/*
 
 # node Build
 cd $build_directory/StratisCore.UI

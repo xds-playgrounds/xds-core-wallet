@@ -28,8 +28,8 @@ cd $build_directory/StratisCore.UI
 
 echo $log_prefix Running npm install
 npm install --verbose
-#npm install --save-dev electron-winstaller
-#npm install --save-dev electron-builder-squirrel-windows
+npm install --save-dev electron-winstaller
+npm install --save-dev electron-builder-squirrel-windows
 
 echo $log_prefix FINISHED restoring dotnet and npm packages
 
