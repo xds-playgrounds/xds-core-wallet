@@ -255,7 +255,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.stakingActive = stakingResponse.staking;
           this.stakingWeight = stakingResponse.weight;
           this.netStakingWeight = stakingResponse.netStakeWeight;
-          this.awaitingMaturity = (this.unconfirmedBalance + this.confirmedBalance) - this.spendableBalance;
+          this.awaitingMaturity = (this.unconfirmedBalance + this.confirmedBalance) - this.stakingWeight;
           this.expectedTime = stakingResponse.expectedTime;
           this.dateTime = this.secondsToString(this.expectedTime);
           if (this.stakingActive) {
