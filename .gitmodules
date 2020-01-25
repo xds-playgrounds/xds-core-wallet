@@ -1,3 +1,4 @@
 [submodule "xds"]
 	path = xds
-	url = https://github.com/sonofsatoshi2020/xds.git
+	url = https://github.com/dangershony/xds.git
+	branch = parallel-mining
