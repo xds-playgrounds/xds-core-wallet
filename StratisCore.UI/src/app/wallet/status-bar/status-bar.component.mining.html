@@ -1,6 +1,16 @@
 <!-- STATUSBAR -->
 <div class="status bg-dark">
   <ul class="list-inline align-self-center row">
+
+    <li *ngIf="(percentSynced == '100%')" class="list-inline-item mx-1" placement="top" ngbTooltip="Mining">
+      <i class="lnr lnr-construction text-success"></i>
+      <small class="text-warning">{{ percentSynced }}</small>
+    </li>
+    <li *ngIf="!(percentSynced == '100%')" class="list-inline-item mx-1" placement="top" ngbTooltip="Not Mining">
+      <i class="lnr lnr-construction text-warning"></i>
+      <small class="text-warning">{{ percentSynced }}</small>
+    </li>
+
     <li *ngIf="!(percentSynced == '100%')" class="list-inline-item mx-1" placement="top" ngbTooltip="{{toolTip}}">
       <i class="lnr lnr-cloud-sync text-warning"></i>
       <small class="text-warning">{{ percentSynced }}</small>
