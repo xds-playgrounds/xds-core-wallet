@@ -1,6 +1,6 @@
 {
   "appId": "com.xds.core",
-  "productName": "XDS Core",
+  "productName": "XDS Core Wallet",
   "publish": null,
   "directories": {
     "output": "app-builds"

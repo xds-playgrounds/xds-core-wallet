@@ -1,10 +1,10 @@
 {
   "name": "XDS-core",
   "description": "XDS Core Wallet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "XDS Platform",
-    "email": "support@XDS.com"
+    "email": "anont@XDS.com"
   },
   "license": "MIT",
   "homepage": "https://github.com/sonofsatoshi2020/xds.git",
