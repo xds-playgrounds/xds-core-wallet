@@ -39,12 +39,11 @@ sudo dotnet restore
 sudo dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
 echo $log_prefix chmoding the xds file
-sudo chmod +x $build_directory/StratisCore.UI/daemon/*
+sudo chmod +x $build_directory/StratisCore.UI/daemon/Daemon*
 
 # node Build
 cd $build_directory/StratisCore.UI
 echo $log_prefix Building and packaging StratisCore.UI
-sudo npm install
 sudo npm run package:linux
 echo $log_prefix finished packaging
 
