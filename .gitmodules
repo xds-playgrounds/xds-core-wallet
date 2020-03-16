@@ -1,3 +1,4 @@
 [submodule "xds"]
 	path = xds
-	url = https://github.com/spartacrypt/xds-1.git
+	url = https://github.com/dangershony/StratisBitcoinFullNode.git
+	branch = xds-network
