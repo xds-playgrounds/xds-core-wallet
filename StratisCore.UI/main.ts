@@ -107,7 +107,7 @@ app.on('ready', () => {
     if (sidechain && !nodaemon) {
       startDaemon("Stratis.SidechainD");
     } else if (!nodaemon) {
-      startDaemon("Daemon")
+      startDaemon("blockcore.xdsd")
     }
   }
   createTray();
@@ -144,27 +144,51 @@ app.on('activate', () => {
   }
 });
 
+// function shutdownDaemon(portNumber) {
+//   var http = require('http');
+//   var data = 'true';
+//   var body = JSON.stringify(data);
+
+//   var request = new http.ClientRequest({
+//     method: 'POST',
+//     hostname: 'localhost',
+//     port: portNumber,
+//     path: '/api/node/shutdown',
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Content-Length": Buffer.byteLength(body)
+//     }
+//   })
+
+//   request.write('true');
+//   request.on('error', function (e) { });
+//   request.on('timeout', function (e) { request.abort(); });
+//   request.on('uncaughtException', function (e) { request.abort(); });
+
+//   request.end(body);
+// };
+
 function shutdownDaemon(portNumber) {
   var http = require('http');
-  var body = JSON.stringify({});
-
-  var request = new http.ClientRequest({
-    method: 'POST',
-    hostname: 'localhost',
-    port: portNumber,
-    path: '/api/node/shutdown',
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": Buffer.byteLength(body)
-    }
-  })
-
-  request.write('true');
-  request.on('error', function (e) { });
-  request.on('timeout', function (e) { request.abort(); });
-  request.on('uncaughtException', function (e) { request.abort(); });
-
-  request.end(body);
+  var options = {
+      hostname: 'localhost',
+      port: portNumber,
+      path: '/api/node/shutdown',
+      method: 'POST'
+  };
+  var req = http.request(options);
+  req.on('response', function (res) {
+      if (res.statusCode === 200) {
+          console.log('Request to shutdown node daemon returned HTTP success code.');
+      }
+      else {
+          console.log('Request to shutdown node daemon returned HTTP failure code: ' + res.statusCode);
+      }
+  });
+  req.on('error', function (err) { });
+  req.setHeader('content-type', 'application/json-patch+json');
+  req.write('true');
+  req.end();
 };
 
 function startDaemon(daemonName) {

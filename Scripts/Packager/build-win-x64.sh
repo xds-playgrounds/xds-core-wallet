@@ -35,9 +35,9 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/xds/src/daemon
-dotnet clean
-dotnet restore
+cd $build_directory/xds/src/Xds
+#dotnet clean
+#dotnet restore
 dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
 # node Build

@@ -1,7 +1,7 @@
 {
   "name": "XDS-core",
   "description": "XDS Core Wallet",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "author": {
     "name": "XDS Platform",
     "email": "anon@XDS.com"
@@ -85,7 +85,7 @@
     "core-js": "2.6.5",
     "electron": "4.1.1",
     "electron-builder": "20.39.0",
-    "electron-builder-squirrel-windows": "^22.3.3",
+    "electron-builder-squirrel-windows": "^22.4.1",
     "electron-reload": "1.4.0",
     "electron-winstaller": "^4.0.0",
     "http-server": "^0.11.1",

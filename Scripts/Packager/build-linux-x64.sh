@@ -33,13 +33,13 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/xds/src/daemon
-sudo dotnet clean
-sudo dotnet restore
+cd $build_directory/xds/src/Xds
+#sudo dotnet clean
+#sudo dotnet restore
 sudo dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
 
 echo $log_prefix chmoding the xds file
-sudo chmod +x $build_directory/StratisCore.UI/daemon/Daemon*
+sudo chmod +x $build_directory/StratisCore.UI/daemon/blockcore*
 
 # node Build
 cd $build_directory/StratisCore.UI
