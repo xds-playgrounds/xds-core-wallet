@@ -17,6 +17,9 @@
     <li *ngIf="transaction.transactionType == 'staked'" class="list-inline-item col-8 blockText text-success">{{ transaction.transactionAmount | coinNotation }} <small>{{ coinUnit }}</small></li>
     <li *ngIf="transaction.transactionType == 'received'" class="list-inline-item col-8 blockText text-success">{{ transaction.transactionAmount | coinNotation }} <small>{{ coinUnit }}</small></li>
     <li *ngIf="transaction.transactionType == 'sent'" class="list-inline-item col-8 blockText text-danger">{{ transaction.transactionAmount + transaction.transactionFee | coinNotation }}  <small>{{ coinUnit }}</small></li>
+    <li *ngIf="transaction.transactionType == 'cold-stake'" class="list-inline-item col-8 blockText text-success">{{ transaction.transactionAmount | coinNotation }} <small>{{ coinUnit }}</small></li>
+    <li *ngIf="transaction.transactionType == 'delegation'" class="list-inline-item col-8 blockText text-success">{{ transaction.transactionAmount | coinNotation }} <small>{{ coinUnit }}</small></li>
+    <li *ngIf="transaction.transactionType == 'withdrawal'" class="list-inline-item col-8 blockText text-danger">{{ transaction.transactionAmount + transaction.transactionFee | coinNotation }}  <small>{{ coinUnit }}</small></li>
   </ul>
   <ul class="list-inline row" *ngIf="transaction.transactionType == 'sent'">
       <li class="list-inline-item col blockLabel">Amount Sent</li>
@@ -26,6 +29,16 @@
       <li class="list-inline-item col blockLabel">Fee</li>
       <li *ngIf="transaction.transactionType == 'sent'" class="list-inline-item col-8 blockText text-danger">{{ transaction.transactionFee | coinNotation }}  <small>{{ coinUnit }}</small></li>
   </ul>
+
+  <ul class="list-inline row" *ngIf="transaction.transactionType == 'withdrawal'">
+    <li class="list-inline-item col blockLabel">Amount Withdrawn</li>
+    <li *ngIf="transaction.transactionType == 'withdrawal'" class="list-inline-item col-8 blockText text-danger">{{ transaction.transactionAmount | coinNotation }}  <small>{{ coinUnit }}</small></li>
+  </ul>
+  <ul class="list-inline row" *ngIf="transaction.transactionType == 'withdrawal'">
+      <li class="list-inline-item col blockLabel">Fee</li>
+      <li *ngIf="transaction.transactionType == 'withdrawal'" class="list-inline-item col-8 blockText text-danger">{{ transaction.transactionFee | coinNotation }}  <small>{{ coinUnit }}</small></li>
+  </ul>
+
   <ul class="list-inline row">
     <li class="list-inline-item col blockLabel">Date</li>
     <li class="list-inline-item col-8 blockText">{{ transaction.transactionTimestamp * 1000 | date:'medium' }}</li>

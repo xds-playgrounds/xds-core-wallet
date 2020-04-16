@@ -67,7 +67,18 @@
                         {{ transaction.transactionType }}
                       </span>
                     </div>
-                    <div class="col text-white row-column text-right">
+
+                    <div class="col text-white row-column text-right" *ngIf="transaction.transactionType == 'withdrawal'">
+                      <span>
+                        - {{ transaction.transactionAmount + transaction.transactionFee | coinNotation }} {{ coinUnit }}
+                      </span>
+                    </div>
+                    <div class="col text-white row-column text-right" *ngIf="transaction.transactionType == 'delegation'">
+                      <span>
+                        + {{ transaction.transactionAmount + transaction.transactionFee | coinNotation }} {{ coinUnit }}
+                      </span>
+                    </div>
+                    <div class="col text-white row-column text-right" *ngIf="transaction.transactionType == 'cold-stake'">
                       <span>
                         + {{ transaction.transactionAmount + transaction.transactionFee | coinNotation }} {{ coinUnit }}
                       </span>

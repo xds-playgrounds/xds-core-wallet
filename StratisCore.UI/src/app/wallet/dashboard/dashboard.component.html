@@ -13,9 +13,8 @@
               </h1>
 
               <ul class="list-unstyled text-lightblue">
-                <!-- <li><strong>{{ (awaitingMaturity | coinNotation) || (0 | coinNotation) }}</strong><em> (staking)</em></li> -->
+                <li><strong>{{ (awaitingMaturity | coinNotation) || (0 | coinNotation) }}</strong><em> (staking)</em></li>
                 <li><strong class="text-uppercase">{{ (unconfirmedBalance | coinNotation) || (0 | coinNotation) }} {{ coinUnit }}</strong><em> (unconfirmed)</em></li>
-                <!-- <li><strong>805.65900153</strong> <em>(staking)</em></li> -->
               </ul>
               <div class="float-right">
                 <a class="btn btn-primary" (click)="openReceiveDialog()">
@@ -112,7 +111,7 @@
                 <div class="col row-header-column text-right">Details</div>
               </div>
               <div class="row mr-1 ml-1">
-                <div class="col-12" *ngFor="let transaction of (transactionArray ? transactionArray.slice(0,5): []); let i=index">
+                <div class="col-12" *ngFor="let transaction of (transactionArray ? transactionArray.slice(0,10): []); let i=index">
                   <div class="row rows">
                     <div class="col text-lightblue row-column">
                       <span class="text-uppercase">

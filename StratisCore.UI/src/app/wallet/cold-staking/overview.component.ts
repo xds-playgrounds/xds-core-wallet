@@ -121,15 +121,14 @@ export class ColdStakingOverviewComponent implements OnInit, OnDestroy {
 
     private getTransactionInfo(transactions: any) {
         this.transactions = [];
-
         for (let transaction of transactions) {
             let transactionType;
             if (transaction.type === "send") {
-                transactionType = "sent";
+                transactionType = "withdrawal";
             } else if (transaction.type === "received") {
-                transactionType = "received";
+                transactionType = "delegation";
             } else if (transaction.type === "staked") {
-                transactionType = "staked";
+                transactionType = "cold-stake";
             } else {
                 transactionType = "unknown";
             }
