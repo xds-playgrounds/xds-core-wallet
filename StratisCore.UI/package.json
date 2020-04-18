@@ -1,14 +1,15 @@
 {
   "name": "XDS-core",
-  "description": "XDS Core Wallet",
-  "version": "1.0.6",
+  "description": "Trustaking XDS Core Wallet",
+  "version": "1.0.7",
   "author": {
-    "name": "XDS Platform",
-    "email": "anon@XDS.com"
+    "name": "Trustaking Platform",
+    "email": "admin@trustaking.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/sonofsatoshi2020/xds.git",
+  "homepage": "https://trustaking.com",
   "keywords": [
+    "trustaking.com",
     "fullnode",
     "ui",
     "XDS",
@@ -85,7 +86,7 @@
     "core-js": "2.6.5",
     "electron": "4.1.1",
     "electron-builder": "20.39.0",
-    "electron-builder-squirrel-windows": "^22.4.1",
+    "electron-builder-squirrel-windows": "^22.5.1",
     "electron-reload": "1.4.0",
     "electron-winstaller": "^4.0.0",
     "http-server": "^0.11.1",

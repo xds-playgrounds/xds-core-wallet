@@ -22,7 +22,7 @@ dotnet --info
 # Initialize dependencies
 echo $log_prefix STARTED restoring dotnet and npm packages
 cd $build_directory
-git submodule update --init --recursive
+#git submodule update --init --recursive
 
 cd $build_directory/StratisCore.UI
 
@@ -35,7 +35,7 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/xds/src/Xds
+cd $build_directory/xds/XDS/src/XdsD
 #dotnet clean
 #dotnet restore
 dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
