@@ -6,6 +6,7 @@ os_platform=win
 log_prefix=WINDOWS-BUILD
 build_directory=$(dirname $(dirname "$PWD"))
 release_directory="/tmp/xds/${log_prefix}"
+node_directory=$build_directory/blockcore-nodes/XDS/src/XdsD
 
 # exit if error
 set -o errexit
@@ -35,7 +36,7 @@ echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
-cd $build_directory/xds/XDS/src/XdsD
+cd $node_directory
 #dotnet clean
 #dotnet restore
 dotnet publish -c $configuration -r $os_platform-$arch -v m -o $build_directory/StratisCore.UI/daemon
