@@ -1,10 +1,10 @@
 {
   "name": "XDS-core",
-  "description": "Trustaking XDS Core Wallet",
+  "description": "XDS Core Wallet",
   "version": "1.0.9",
   "author": {
-    "name": "Trustaking.com",
-    "email": "trustaking@protonmail.com"
+    "name": "XDS",
+    "email": "cryptohunter@protonmail.com"
   },
   "license": "MIT",
   "homepage": "https://trustaking.com",
