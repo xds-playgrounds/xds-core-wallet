@@ -24,12 +24,10 @@ echo $log_prefix STARTED restoring dotnet and npm packages
 cd $build_directory
 #git submodule update --init --recursive
 
-cd $build_directory/StratisCore.UI
-
-echo $log_prefix Running npm install
-sudo npm install --verbose
-
-echo $log_prefix FINISHED restoring dotnet and npm packages
+# cd $build_directory/StratisCore.UI
+# echo $log_prefix Running npm install
+# sudo npm install --verbose
+# echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'

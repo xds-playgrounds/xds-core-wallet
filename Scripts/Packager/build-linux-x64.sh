@@ -24,12 +24,12 @@ echo $log_prefix STARTED restoring dotnet and npm packages
 cd $build_directory
 #git submodule update --init --recursive
 
-cd $build_directory/StratisCore.UI
+# cd $build_directory/StratisCore.UI
 
-echo $log_prefix Running npm install
-sudo npm install --verbose
+# echo $log_prefix Running npm install
+# sudo npm install --verbose
 
-echo $log_prefix FINISHED restoring dotnet and npm packages
+# echo $log_prefix FINISHED restoring dotnet and npm packages
 
 # dotnet publish
 echo $log_prefix running 'dotnet publish'
@@ -44,7 +44,7 @@ sudo chmod +x $build_directory/StratisCore.UI/daemon/blockcore*
 # node Build
 cd $build_directory/StratisCore.UI
 echo $log_prefix Building and packaging StratisCore.UI
-sudo npm run package:linux
+npm run package:linux
 echo $log_prefix finished packaging
 
 echo $log_prefix contents of the app-builds folder

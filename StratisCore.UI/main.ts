@@ -55,7 +55,7 @@ function createWindow() {
     frame: true,
     minWidth: 1150,
     minHeight: 650,
-    title: "Trustaking XDS Core Wallet",
+    title: "XDS Core Wallet",
     webPreferences: {
       webSecurity: false
     },
@@ -237,7 +237,7 @@ function createTray() {
       }
     }
   ]);
-  systemTray.setToolTip('Trustaking XDS Core Wallet');
+  systemTray.setToolTip('XDS Core Wallet');
   systemTray.setContextMenu(contextMenu);
   systemTray.on('click', function() {
     if (!mainWindow.isVisible()) {

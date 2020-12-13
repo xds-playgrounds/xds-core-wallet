@@ -1,6 +1,6 @@
 {
   "appId": "com.xds.core",
-  "productName": "Trustaking XDS Core Wallet",
+  "productName": "XDS Core Wallet",
   "publish": null,
   "directories": {
     "output": "app-builds"
@@ -32,7 +32,7 @@
     "target": [
       "AppImage"
     ],
-    "synopsis": "XDS Staking Wallet.",
+    "synopsis": "XDS Core Wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },
