@@ -5,7 +5,7 @@ This is the repository of the XDS Core Wallet, a full node staking wallet using 
 # Building and running the XDS Core daemon
 
 The XDS Core daemon is the backend REST service, hosting a XDS node upon which XDS Core depends.  
-The XDS Core daemon is hosted in another repository. All information on building and running the daemon can be found [here](https://github.com/block-core/blockcore-node).
+The XDS Core daemon is hosted in another repository. All information on building and running the daemon can be found [here](https://github.com/block-core/blockcore-nodes).
 
 # Building and running the XDS Core user interface
 
@@ -18,12 +18,12 @@ Download and install the latest Long Term Support (LTS) version of NodeJS at: ht
 Clone this repository locally:
 
 ``` bash
-git clone https://github.com/block-core/blockcore-node.git
+git clone https://github.com/xds-playgrounds/xds-core-wallet.git
 ```
 
 Navigate to the StratisCore.UI folder in a terminal:
 ``` bash
-cd ./CoreWallet/StratisCore.UI
+cd ./xds-core-wallet/StratisCore.UI
 ```
 
 ## Install dependencies with npm:
@@ -37,7 +37,10 @@ npm install
 ## Run the UI in development mode
 
 #### Terminal Window 1
-[Run the daemon](https://github.com/block-core/blockcore-node.git)  
+``` bash
+cd ./xds-core-wallet/blockcore-nodes/XDS/src/XdsD
+dot net run
+```
 
 #### Terminal Window 2
 Use `npm run mainnet` to start the UI in mainnet mode or `npm run testnet` to start the UI in testnet mode.  
