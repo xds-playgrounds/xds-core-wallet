@@ -1,3 +1,6 @@
 [submodule "blockcore-nodes"]
 	path = blockcore-nodes
 	url = https://github.com/block-core/blockcore-nodes.git
+[submodule "xds-blockcore-experimental"]
+	path = xds-blockcore-experimental
+	url = https://github.com/xds-playgrounds/xds-blockcore-experimental.git
