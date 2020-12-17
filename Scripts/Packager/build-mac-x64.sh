@@ -6,7 +6,7 @@ os_platform=osx
 log_prefix=MAC-BUILD
 build_directory=$(dirname $(dirname "$PWD"))
 release_directory="/tmp/xds/${log_prefix}"
-node_directory=$build_directory/blockcore-nodes/XDS/src/XdsD
+node_directory=$build_directory/xds-blockcore-experimental/src/Networks/Xds/Xdsd
 
 # exit if error
 set -o errexit
